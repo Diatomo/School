@@ -1,0 +1,44 @@
+Author: Charles C. Stevenson
+Date: 11/25/2016
+
+1. Some commands are useful for running scripts and programs. 
+   What are the following pair of commands useful for?
+		a. at and cron
+			conr = enables unix users to 
+			       execute commands or scripts 
+                               automatically at a specified 
+			       time/date.
+					e.g. going to the web to download email.
+			at = process management to execute 
+			     commands at a later time
+		b. bg and fg
+			bg = process management that runs jobs 
+			     in the background.
+			fg = processmanagement that runs jobs 
+			     in the foreground.
+		c. jobs and nice
+			jobs = process management command that 
+			       displays jobs in the current session.
+			nice = involves a utility for shell script 
+				giving its execution a particular priority. 
+				20=highest, 0 = lowest. etc...
+		d. watch and dmesg
+			watch = runs specified command repeatedly 
+				and displays the results on standard 
+				output so you watch it change over-time.
+			dmesg = shows details about hardware drivers 
+				connected to, disconnected from a 
+				machine.
+
+2. What would be the output after the following awk script is executed:
+		ls –al > dirfile.txt
+		awk -f awk.commands dirfile.txt
+	The content of the awk.commands script is:
+		#!/usr/bin/awk -f
+		BEGIN {sum=0}
+		{sum=sum+$5}
+		END {print sum}
+
+	This command would sum up the 5th element of the ls -al command, which
+	are the file sizes. One note though, the size of dirfile.txt isn't added
+	because it runs the command before the file is created.

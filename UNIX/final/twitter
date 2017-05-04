@@ -1,0 +1,164 @@
+Script started on Mon 12 Dec 2016 06:07:07 PM EST
+]0;diatom@BroodMother: ~/Documents/UNIX/finaldiatom@BroodMother:~/Documents/UNIX/final$ ./whatisontwitter.sh
+
+
+  _______      _____ _____ _____ ___ ___   ___  ___ ___    _   ___ ___ ___ 
+ |_   _\ \    / /_ _|_   _|_   _| __| _ \ / __|/ __| _ \  /_\ | _ \ __| _ \
+   | |  \ \/\/ / | |  | |   | | | _||   / \__ \ (__|   / / _ \|  _/ _||   /
+   |_|   \_/\_/ |___| |_|   |_| |___|_|_\ |___/\___|_|_\/_/ \_\_| |___|_|_\
+                                                                           
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779394060
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 1
+
+
+--2016-12-12 18:07:16--  https://twitter.com/i/streams/category/686639666779394060
+Resolving twitter.com (twitter.com)... 104.244.42.193, 104.244.42.129
+Connecting to twitter.com (twitter.com)|104.244.42.193|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 302052 (295K) [text/html]
+Saving to: ‘twitter.html’
+
+ 0% [                                                                                                                                                                                                      ] 0           --.-K/s              34% [==================================================================>                                                                                                                                   ] 103,434      346KB/s             72% [==============================================================================================================================================>                                                       ] 218,898      415KB/s             100%[=====================================================================================================================================================================================================>] 302,052      470KB/s   in 0.6s   
+
+2016-12-12 18:07:17 (470 KB/s) - ‘twitter.html’ saved [302052/302052]
+
+./whatisontwitter.sh: line 60: i: command not found
+sed: -e expression #1, char 4: unknown command: `/'
+sed: -e expression #1, char 4: unknown command: `/'
+sed: -e expression #1, char 4: unknown command: `/'
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779394060
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 3
+
+
+Which word would you like to exclude: do
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779394060
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 2
+Enter in a twitter urlhttps://twitter.com/i/streams/category/686639666779426835
+
+
+--2016-12-12 18:08:12--  https://twitter.com/i/streams/category/686639666779426835
+Resolving twitter.com (twitter.com)... 104.244.42.193, 104.244.42.129
+Connecting to twitter.com (twitter.com)|104.244.42.193|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 297306 (290K) [text/html]
+Saving to: ‘twitter.html’
+
+ 0% [                                                                                                                                                                                                      ] 0           --.-K/s               9% [=================>                                                                                                                                                                                    ] 27,846      72.1KB/s             19% [====================================>                                                                                                                                                                 ] 56,806      95.3KB/s             27% [=====================================================>                                                                                                                                                ] 81,422      91.4KB/s             44% [=======================================================================================>                                                                                                              ] 133,006      121KB/s             58% [=================================================================================================================>                                                                                    ] 172,646      116KB/s             78% [==========================================================================================================================================================>                                           ] 233,462      138KB/s             100%[=====================================================================================================================================================================================================>] 297,306      158KB/s   in 1.8s   
+
+2016-12-12 18:08:14 (158 KB/s) - ‘twitter.html’ saved [297306/297306]
+
+./whatisontwitter.sh: line 60: i: command not found
+sed: -e expression #1, char 4: unknown command: `/'
+sed: -e expression #1, char 4: unknown command: `/'
+sed: -e expression #1, char 4: unknown command: `/'
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779426835
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 4
+
+
+
+1. Summary
+2. Word Summary
+3. Exit
+Select an Option: 1
+  Blown away by the love from 1D amp; Louis fans for JustHoldOn! Special thx to ProjectHoIdOn OT4WWUpdates 1DUpdatesOnline 1DBreakUpdates
+  BDAY PART 2 // facebook
+  Blown away by the love from 1D amp; Louis fans for JustHoldOn! Special thx to ProjectHoIdOn OT4WWUpdates 1DUpdatesOnline 1DBreakUpdates
+  Tune-in to SXMLiquidMetal josemangin all this week starting tomorrow at 5pm ET to hear Randy discuss The Duke EP + much more.
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779426835
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 4
+
+
+
+1. Summary
+2. Word Summary
+3. Exit
+Select an Option: 1
+  Blown away by the love from 1D amp; Louis fans for JustHoldOn! Special thx to ProjectHoIdOn OT4WWUpdates 1DUpdatesOnline 1DBreakUpdates
+  BDAY PART 2 // facebook
+  Blown away by the love from 1D amp; Louis fans for JustHoldOn! Special thx to ProjectHoIdOn OT4WWUpdates 1DUpdatesOnline 1DBreakUpdates
+  Tune-in to SXMLiquidMetal josemangin all this week starting tomorrow at 5pm ET to hear Randy discuss The Duke EP + much more.
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779426835
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 4
+
+
+
+1. Summary
+2. Word Summary
+3. Exit
+Select an Option: 2
+Which word would you like to analyze?
+Number      Top-words   frequency  Pecentage
+----------  ----------  ---------  -----------'
+1            	much       2	          9.09091
+2            	love       2	          9.09091
+3            	yo         1	          4.54545
+4            	x          1	          4.54545
+5            	Who;s      1	          4.54545
+6            	while      1	          4.54545
+7            	went       1	          4.54545
+8            	week       1	          4.54545
+9            	we         1	          4.54545
+10           	video      1	          4.54545
+11           	US         1	          4.54545
+12           	u          1	          4.54545
+13           	turmoil    1	          4.54545
+14           	true       1	          4.54545
+15           	time       1	          4.54545
+16           	thx        1	          4.54545
+17           	Sydney?    1	          4.54545
+18           	sticker    1	          4.54545
+19           	South      1	          4.54545
+20           	sooooo     1	          4.54545
+Select a Number: 7
+grep: input file ‘./temp.txt’ is also the output
+./MonDec12/18:08:12/words.txt:7            	went       1	          4.54545
+./MonDec12/18:08:12/log.txt:7)  Remember that time we all went skydiving in Sydney?
+./MonDec12/18:08:12/messages.txt:  Remember that time we all went skydiving in Sydney?
+./twitter:7            	went       1	          4.54545
+./current/words.txt:7            	went       1	          4.54545
+./current/log.txt:7)  Remember that time we all went skydiving in Sydney?
+./current/messages.txt:  Remember that time we all went skydiving in Sydney?
+
+1. Would you like to continue with the current url:  https://twitter.com/i/streams/category/686639666779426835
+2. Choose another url
+3. Add word to excludedwords
+4. Analyze Text
+0. Exit
+Select an Option: 0
+
+
+BYE!
+]0;diatom@BroodMother: ~/Documents/UNIX/finaldiatom@BroodMother:~/Documents/UNIX/final$ exit
+exit
+
+Script done on Mon 12 Dec 2016 06:09:06 PM EST

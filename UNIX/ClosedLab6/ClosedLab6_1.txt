@@ -1,0 +1,5 @@
+Script started on Mon 21 Nov 2016 07:20:18 PM EST
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab6diatom@BroodMother:~/Documents/UNIX/ClosedLab6$ [1;5A[K[K[K[K[Kei[Kxit
+exit
+
+Script done on Mon 21 Nov 2016 07:20:24 PM EST

@@ -1,0 +1,80 @@
+Script started on Mon 24 Oct 2016 06:58:09 PM EDT
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab4diatom@BroodMother:~/Documents/UNIX/ClosedLab4$ ./dirtree.csh 
+The current directory is: 
+/home/diatom/Documents/UNIX/ClosedLab4
+1. Enter a directory name
+2. Print the directory tree in the screen
+3. Print the directory tree to a file
+4. Exit
+2
+.
+|
+|------blahblah
+|------ClosedLab4_2.txt
+|------dirtree
+|------DirTree
+|------dirtree.csh
+|------guess_game.sh
+|------guess.sh
+|------records
+
+The current directory is: 
+/home/diatom/Documents/UNIX/ClosedLab4
+1. Enter a directory name
+2. Print the directory tree in the screen
+3. Print the directory tree to a file
+4. Exit
+3
+File Name : 
+DirTree
+|
+
+The current directory is: 
+/home/diatom/Documents/UNIX/ClosedLab4
+1. Enter a directory name
+2. Print the directory tree in the screen
+3. Print the directory tree to a file
+4. Exit
+1
+/home/do iatom/Documents/UNIX
+
+The current directory is: 
+/home/diatom/Documents/UNIX/ClosedLab4
+1. Enter a directory name
+2. Print the directory tree in the screen
+3. Print the directory tree to a file
+4. Exit
+2
+.
+|
+|------blahblah
+|------ClosedLab4_2.txt
+|------dirtree
+|------DirTree
+|------dirtree.csh
+|------guess_game.sh
+|------guess.sh
+|------records
+
+The current directory is: 
+/home/diatom/Documents/UNIX/ClosedLab4
+1. Enter a directory name
+2. Print the directory tree in the screen
+3. Print the directory tree to a file
+4. Exit
+3
+File Name : 
+4
+|
+
+The current directory is: 
+/home/diatom/Documents/UNIX/ClosedLab4
+1. Enter a directory name
+2. Print the directory tree in the screen
+3. Print the directory tree to a file
+4. Exit
+4
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab4diatom@BroodMother:~/Documents/UNIX/ClosedLab4$ exit
+exit
+
+Script done on Mon 24 Oct 2016 06:59:08 PM EDT

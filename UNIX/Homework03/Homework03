@@ -1,0 +1,73 @@
+
+Author: Charles C. Stevenson
+Class : UNIX Programming M 9:20 - 10:30
+Description : Homework 03
+
+
+Question 1
+The different UNIX shells and thus scripts written with them have different syntax for
+flow control and variables. Identify for the TCshell and Bash shells the syntax for the
+following structures:
+
+  if / else statement
+    TCshell
+      if ( expression ) then
+        block of statements
+      endif
+
+    bash
+      if command
+      then
+        block of statements
+      fi
+
+      if [[ expression ]]
+      then
+        block of statements
+      fi
+
+    if (( numeric expression ))
+      then
+        block of statements
+    fi
+
+  for loop
+    TCshell
+      foreach variable ( world list )
+        block of statements
+      end
+
+    bash
+      for variable in 1 2 3 4 5 .. N
+      do
+        commands
+      done
+
+  while loop
+    TCshell
+      while ( expression )
+        block of statements
+      end
+
+    bash
+      while [condition ]
+      do
+        commands
+      done
+
+Question 2
+How can you run a process in the background?
+  when you run a command; append & ot the command line
+How can you check if it is running?
+  ps
+How can you stop it?
+  kill PID
+    PID = process ID
+
+Question 3
+Study the following script? What does the script do?
+  The following script generates a random number and then in the while loop the user
+  guesses the number. If they guess wrong it'll prompt if the guess was too small or too
+  large. If they guess correct then they are told 'correct' and how many guesses it took.
+
+

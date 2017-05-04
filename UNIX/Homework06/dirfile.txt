@@ -1,0 +1,6 @@
+total 12
+drwxrwxr-x  2 diatom diatom 4096 Nov 26 02:46 .
+drwxrwxr-x 10 diatom diatom 4096 Nov 26 02:41 ..
+-rwxrwxr-x  1 diatom diatom   61 Nov 26 02:46 awk.commands
+-rw-rw-r--  1 diatom diatom    0 Nov 26 02:46 dirfile.txt
+-rw-rw-r--  1 diatom diatom    0 Nov 26 02:43 homework06.txt

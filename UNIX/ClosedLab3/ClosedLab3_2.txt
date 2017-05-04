@@ -1,0 +1,22 @@
+Script started on Mon 10 Oct 2016 10:46:56 PM EDT
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab3diatom@BroodMother:~/Documents/UNIX/ClosedLab3$ ./searchcontacts.sh Range [Kr Danger
+Hello, Ranger Danger!
+Today is Monday and the current time is 10:47:05 PM
+These contacts are having a birthday today: 
+Diablo LordOfHatred  10-10  696-666-6669   lordofhatred@osu.edu
+What is the last name of a friend? Paco
+Number of lines: 7 contacts
+Abaddon O-Yama  30-10  654-079-0987   yama@osu.edu
+Beherit Mormo  07-07  123-456-7890   mormo@osu.edu
+Dagon Kishi  21-01  465-928-9364   kishi@osu.edu
+Diablo LordOfHatred  10-10  696-666-6669   lordofhatred@osu.edu
+Dracula LordOfTerror  31-10  666-666-6666   lordofterror@osu.edu
+Loki Kiwo  13-08  321-654-0987   kiwo@osu.edu
+Mario Sunshine  17-04  857-928-0798   sunshine@osu.edu
+What is the last name of a friend? Kiwo
+Loki Kiwo  13-08  321-654-0987   kiwo@osu.edu
+GOODBYE 22 
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab3diatom@BroodMother:~/Documents/UNIX/ClosedLab3$ exit
+exit
+
+Script done on Mon 10 Oct 2016 10:47:14 PM EDT

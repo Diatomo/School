@@ -1,0 +1,26 @@
+
+
+Homework05
+Charles C. Stevenson
+
+
+1.
+
+  uname = gets name and information about the current kernel, such as..network, machine, processor or operating-system
+  id = this is useful for finding user/group id's
+
+2.
+  df = reports file system disk usage
+  du = summarizes disk usage of each file recursively for directories.
+
+3.
+  file = determines file type
+  locate = used to find the location of files and directories
+
+
+4. What would the following line do if you apply it to a file...could you recover the file..explain.
+
+  I would say yes you could, because sed only edits a file based on a pattern. in this case, the -f flag says things are going to be added to a script
+  and y indicates we are transliterated over a file to substitute characters to another form of characters. This line of code seems to cipher a series
+  of characters to another set of characters. Because it is shifting letters over in a pattern one could certainly recover the file by doing the opposite
+  operation

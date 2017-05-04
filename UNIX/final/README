@@ -1,0 +1,15 @@
+
+
+Author: Charles Stevenson
+
+
+To run place the folder into a directory and do
+
+  ./whatisontwitter.sh
+
+Make sure the hidden files:
+        .title
+        .url
+        .excludedwords
+
+are all included in the same directory

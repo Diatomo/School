@@ -1,0 +1,33 @@
+Script started on Mon 24 Oct 2016 07:09:04 PM EDT
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab4diatom@BroodMother:~/Documents/UNIX/ClosedLab4$ ./guess_game.sh
+[H[2J1. Run the guessing game
+2. Exit
+1
+
+guess the number
+50
+too large
+25
+too large
+15
+too large
+5
+too large
+2
+correct!
+using 5 rounds
+1. Run the guessing game
+2. Exit
+2
+Exiting the guessing game
+Your average of rounds is: 5
+Your scores are: 
+8
+6
+2
+8
+5
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab4diatom@BroodMother:~/Documents/UNIX/ClosedLab4$ exit
+exit
+
+Script done on Mon 24 Oct 2016 07:09:30 PM EDT

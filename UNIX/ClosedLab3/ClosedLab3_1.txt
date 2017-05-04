@@ -1,0 +1,22 @@
+Script started on Mon 10 Oct 2016 11:23:58 AM EDT
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab3diatom@BroodMother:~/Documents/UNIX/ClosedLab3$ ./lab4 xor -k 0x22 Hello[C[C[C[C[Cceasar -r -3 "Khoor, Zruog!"[C[C[C[C[Casdf cis[K[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[Kci[Kreatecontacts.sh o[K[K
+
+1. Enter a Contact
+2. Show contacts
+3. Exit
+
+Select an Option: 1
+1. friend's full name:Jina Yu
+2. his/her birth date (dd-mm): 07-12
+3. his/her phone number (xxx-yyy-yyyy): 123-456-7890
+4. his/her email (name@domain.xyz): blank@osu.edu
+Select an Option: 2
+NAME: Jina Yu
+BIRTHDAY: 07-12
+PHONE: 123-456-7890
+EMAIL: blank@osu.edu
+Select an Option: 3
+]0;diatom@BroodMother: ~/Documents/UNIX/ClosedLab3diatom@BroodMother:~/Documents/UNIX/ClosedLab3$ exit
+exit
+
+Script done on Mon 10 Oct 2016 11:25:01 AM EDT

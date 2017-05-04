@@ -1,0 +1,23 @@
+
+
+1. Command Section
+        -cmp && diff    (comparisons)
+                -cmp sees if two files are the same and diff tells you the differences.
+
+        -sort && uniq   (sorts && cleans)
+                -sort sorts lines of a text file and uniq omits repeats or reports them
+        -tee && tr(input/output)
+                -tee takes input and outputtputs it to a file, tr cleans the input by deleting characters
+        -fmt &&fmt split(formatting)
+                -fmt formats a text file and split can split a file into peices (i.e. smaller files)
+
+2. UNIX World Section
+
+    A container is something in which code is packaged in a standardized way so that they can quickly be plugged
+    in and run on the Linux operting system. The importance of containers is like that of shipping containers.
+    It's standardized so instead of shipping your goods in a way that works specific to the goods you're shipping.
+    It is standardized so the storing and transport process is seamless.
+
+    A Docker is a container technology that compacts the resources together. It can store more resources
+    in a smaller space. Docker Containers virtualize the OS, splitting it up into virtualized compartments 
+    to run container applications.
