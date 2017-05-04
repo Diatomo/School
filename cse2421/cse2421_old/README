@@ -1,0 +1,11 @@
+name: Charles Stevenson
+time: 8-10hours
+Problems:
+	1) Was terminating the scanf("%d",&ch) for some reason the '\n' char did terminate
+	   unless I explicitiy said to do so.
+	2) Next I was having trouble understanding double pointers and passing them between
+	   functions. I didn't know also what assigning a pointer to a resolved double pointer
+ 	   meant.
+Concerns : I wish I understood pointers better.
+
+Statement: "I have neither given nor received assistance on this assignment"

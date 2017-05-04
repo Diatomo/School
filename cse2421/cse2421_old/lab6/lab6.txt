@@ -1,0 +1,443 @@
+Lab 6 – Primality, Revisited
+
+CSE 2421 – Systems I
+
+Reminder: All labs are to be completed entirely on your own.
+
+Information about the Linux environment and your CSE account can be found as separate references. Refer to the General Lab Guidelines for details on grading, submission, and academic misconduct.
+
+Demonstrating
+
+Assembly basics
+
+Assembly registers
+
+Assembly logic flows
+
+Assembly vs. C
+
+Overview
+
+In this lab you will implement an assembly program to determine whether or not a series of numbers are prime.
+
+A positive integer is said to be prime if it has no positive divisors other than 1 and itself.
+
+The number 1 is not considered prime.
+
+As an example, the first 10 prime numbers are 2, 3, 5, 7, 11, 13, 17, 19, 23, 29.
+
+Outline
+
+The user will enter a non-negative integer.
+
+If the integer is 0, your program exits.
+
+If the integer is non-zero, your program determines if it is a prime number or not.
+
+If the number is prime, the program prints “prime”.
+
+If the number is not prime, the program prints “not prime”.
+
+The program continues until the user enters 0.
+
+Design
+
+A simple C version of this program is provided in the appendix to this lab.
+
+Your assembly code should recreate the C version of this lab. For example, if you needed to convert a C “for” loop to assembly, implementing the same functionality as a switch statement would not be appropriate. If the C code says “i*i<=n”, implementing “i” is incorrect, even if the output is the same.
+
+An assembly version of the first half of the program is also provided in the appendix.
+
+read_integer
+
+Call read_integer with “call read_integer”. When read_integer returns to you, the eax register will contain an integer read from the user.
+
+print_prime
+
+Call print_prime with “call print_prime”. When print_prime returns to you, it will have printed “prime\n” to standard out.
+
+print_not_prime
+
+Call print_not_prime with “call print_not_prime”. When print_not_prime returns to you, it will have printed “not prime\n” to standard out.
+
+You should copy these functions into your code exactly as they are written. A small typo will break the code, and cost you hours of debugging.
+
+You may wish to directly paste this example code into your lab source. If you do this, ensure that proper spacing and indentation is maintained.
+
+You are strongly encouraged to read and understand this code. It is never wise to use code that you do not understand.
+
+Use the assembly from “skeleton.asm” in the appendix of this lab as a starting point.
+
+Your assembly code does not have access to C header files. You will need to use assembly instructions and the provided functions to achieve the functionality you need.
+
+For storing data, your program must only use the registers eax, ebx, ecx, edx, esi, and edi. With the exception of the provided read_integer/print_prime/print_not_prime functions, your program should not use any local or global variables.
+
+Files
+
+Lab6.asm
+
+Will contain all of this lab’s code.
+
+Assembling
+
+Your lab will be built and run with the following commands:
+
+nasm –felf lab6.asm –o lab6.o
+
+ld –melf_i386 lab6.o –o lab6
+
+./lab6
+
+Input and Output
+
+Input
+
+A series of non-negative integers, read from the standard input stream, each less than 4,000,000,000, separated by a newline (‘\n’)
+
+Output
+
+A series of strings, “prime” or “not prime”, printed to the standard output stream, separated by a newline (‘\n’)
+
+Hints
+
+Use the x86 division instruction (div) to see if one number is evenly divisible by another.
+
+Use gdb to help debug your program.
+
+Notice that the C program uses unsigned integers. When comparing unsigned integers in assembly, you should use the “ja” (jump if above) and “jb” (jump if below) instructions, instead of “jg” (jump if greater) and “jl” (jump if less than) – ja and jb are used for unsigned comparisons, while jg and jl are used for signed comparisons.
+
+Sample input and output
+
+Example input
+
+6
+
+3
+
+10856
+
+1992999
+
+102841
+
+0
+
+Example output
+
+not prime
+
+prime
+
+not prime
+
+not prime
+
+prime
+
+Test your lab with the sample input and output files, “sample_in” and “sample_out”.
+
+Check your lab with:
+
+./lab6 < sample_in | diff sample_out –
+
+There should be no output from this command if your lab is running correctly.
+
+Remember, these files should not be submitted with your lab!
+
+Submission
+
+Submit only:
+
+Lab6.asm
+
+README
+
+
+
+#include <stdio.h>
+
+#include <stdbool.h>
+
+unsigned int read_integer(void)
+
+{
+
+unsigned int n;
+
+scanf("%u",&n);
+
+return n;
+
+}
+
+void print_prime(void)
+
+{
+
+printf("prime\n");
+
+}
+
+void print_not_prime(void)
+
+{
+
+printf("not prime\n");
+
+}
+
+int main(void)
+
+{
+
+unsigned int i;
+
+unsigned int n=read_integer();
+
+bool is_prime;
+
+while (n!=0)
+
+{
+
+if (n==1) {
+
+print_not_prime();
+
+}
+
+else {
+
+is_prime=true;
+
+for (i=2; i*i<=n; i++) {
+
+if ((n%i)==0) {
+
+is_prime=false;
+
+break;
+
+}
+
+}
+
+if (is_prime) {
+
+print_prime();
+
+}
+
+else {
+
+print_not_prime();
+
+}
+
+}
+
+n=read_integer();
+
+}
+
+}
+
+
+
+; skeleton.asm
+
+; my required comments
+
+USE32 ; tell nasm to assemble 32 bit code
+
+global _start ; export the start symbol for our program
+
+_start: ; tell the linker where our program begins
+
+; beginning of program
+
+; my code here
+
+; exit
+
+mov ebx, 0
+
+mov eax, 1
+
+int 80h
+
+; functions here
+
+
+
+print_not_prime:
+
+; set up stack frame
+
+push ebp ; save the current stack frame
+
+mov ebp, esp ; set up a new stack frame
+
+; save modified registers
+
+push eax ; save eax
+
+push ebx ; save ebx
+
+push ecx ; save ecx
+
+push edx ; save edx
+
+; write not prime to stdout
+
+mov eax, 4 ; syscall 4 (write)
+
+mov ebx, 1 ; file descriptor (stdout)
+
+mov ecx, .not_prime ; pointer to data to load
+
+mov edx, .not_prime.l ; byte count
+
+int 0x80 ; issue system call
+
+; cleanup
+
+pop edx ; restore edx
+
+pop ecx ; restore ecx
+
+pop ebx ; restore ebx
+
+pop eax ; restore eax
+
+pop ebp ; restore ebp
+
+ret ; return to caller
+
+.not_prime: db "not prime", 10
+
+.not_prime.l equ $-.not_prime
+
+
+
+print_prime:
+
+; set up stack frame
+
+push ebp ; save the current stack frame
+
+mov ebp, esp ; set up a new stack frame
+
+; save modified registers
+
+push eax ; save eax
+
+push ebx ; save ebx
+
+push ecx ; save ecx
+
+push edx ; save edx
+
+; write prime to stdout
+
+mov eax, 4 ; syscall 4 (write)
+
+mov ebx, 1 ; file descriptor (stdout)
+
+mov ecx, .prime ; pointer to data to load
+
+mov edx, .prime.l ; byte count
+
+int 0x80 ; issue system call
+
+; cleanup
+
+pop edx ; restore edx
+
+pop ecx ; restore ecx
+
+pop ebx ; restore ebx
+
+pop eax ; restore eax
+
+pop ebp ; restore ebp
+
+ret ; return to caller
+
+.prime: db "prime", 10
+
+.prime.l equ $-.prime
+
+
+
+read_integer:
+
+; set up stack frame
+
+push ebp ; save the current stack frame
+
+mov ebp, esp ; set up a new stack frame
+
+; set up local variables
+
+sub esp, 8 ; allocate space for two local ints
+
+mov dword [ebp-4], '0' ; digit: initialize to '0'
+
+mov dword [ebp-8], 0 ; value: initialize to 0
+
+; save modified registers
+
+push ebx ; save ebx
+
+push ecx ; save ecx
+
+push edx ; save edx
+
+.read_loop:
+
+; update number calculation
+
+mov eax, 10 ; load multiplier
+
+mul dword [ebp-8] ; multiply current value by 10, store in eax
+
+add eax, [ebp-4] ; add new digit to current value
+
+sub eax, '0' ; convert digit character to numerical equivalent
+
+mov [ebp-8], eax ; save new value
+
+; read in digit from user
+
+mov eax, 3 ; syscall 3 (read)
+
+mov ebx, 0 ; file descriptor (stdin)
+
+lea ecx, [ebp-4] ; pointer to data to save to
+
+mov edx, 1 ; byte count
+
+int 0x80 ; issue system call
+
+; loop until enter is pressed
+
+cmp dword [ebp-4], 10 ; check if end of line reached
+
+jne .read_loop ; if not, continue reading digits
+
+; cleanup
+
+mov eax, [ebp-8] ; save final value in eax
+
+pop edx ; restore edx
+
+pop ecx ; restore ecx
+
+pop ebx ; restore ebx
+
+add esp, 8 ; free local variables
+
+pop ebp ; restore ebp
+
+ret ; return to caller

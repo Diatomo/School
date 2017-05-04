@@ -1,0 +1,8 @@
+Name = Charles Stevenson
+Time = 6-8 hours
+Concerns: I'm a little concerned about how I am indexing through my array
+	  because I just made a contiguous 1-D array and sliced through
+	  it as if it were 3D. This is good for memory on the heap
+	  but if the indices are not correct then it doesn't slice
+	  through the array correctly.
+I have neither given nor received assistance on this assignment

@@ -1,0 +1,7 @@
+Author: Charles C. Stevenson
+
+To compile do
+	'gcc zombies.c -o zombie -std=c99'
+To run
+	'./zombie
+
