@@ -1,0 +1,6 @@
+Dependencies
+
+	pandas
+
+to run:
+	python mainMeta.py

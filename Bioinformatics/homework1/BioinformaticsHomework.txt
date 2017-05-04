@@ -1,0 +1,38 @@
+
+Charles C. Stevenson
+Bioinformatics homework
+
+
+Problem 1 
+	What are the top 5 genes with alrgest absolute t-score?
+		G5
+		G10
+		EXT1
+		MMP9
+		G17
+
+	Of the 70 Genes how many show statically significant differential expression?
+		3 Genes
+
+	Could some sombinations of genese that are not in your list from part (a) actually be better
+	for classification? Why? What are the weaknesses of t-tests?
+		Yes, some genes could be better for classification than from part a. One reason
+		could be the quality of the data, Another reason might be because the expression
+		doesn't follow a normal distribution which the t-tests assumes. That's also a
+		weakness of the t-test.
+
+Problem 2:
+	Suppose a new sample arrives with gene expression values...What is the predicted label?
+		-8.1028 * 0.38 + 3.5380 * -0.132 + 0.3239 * 0.101 - 1.9215 = -5.43
+			therefore 0
+	What is hold-out error in testSet?
+		=44.68%
+	What is the resubstitution error?
+		=43.33%
+	What do these results tell you?
+		Well for one I didn't train the LDA classifier on the test set, but took the LDA
+		classifier from the homework. Therefore, it tells me how much I correctly classified.
+		If I trained the LDA classifier on the training set I should expect a much higher value
+		then on my test set. However; because I'm running the error on an untrained classifier
+		they both classifier the same. If more training samples were available it might change the 
+		results, but probably not by much.
