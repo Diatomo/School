@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+(define (createNewList lstA lstB)
+(cond
+((null? lstA) lstB)
+(#t (sort (car lstA) lstB))))
+
+(define (removeHead lstA lstB)
+(cond
+((null? lstB) (car lstA))
+((= (car lstA) (car lstB)) (removeHead (cdr lstA) lstB))
+(#t removeHead lstA (cdr lstB))))
+
+(define (sort head tail)
+(cond
+((null? tail) (cons head tail))
+((< head (car tail)) (cons head tail))
+(#t (sort head (cdr tail)))))
+
+(define (eliminateNsort lstA lstB)
+(cond
+((null? lstA) lstB)
+(#t createNewList (removeHead lstA lstB) (eliminateNsort(cdr lstA) lstB))))

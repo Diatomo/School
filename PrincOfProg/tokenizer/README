@@ -1,0 +1,16 @@
+Author = Charles C. Stevenson
+Date = 03/22/2017
+
+Files required
+  CoreGrammar.py #This is the Core grammar class that defines the tokens in the language
+  Token.py #Token is a node that has a token value
+  Tokenizer.py # Tokenizer object that tokenizes a file
+  nodes.py # contains a list of nodes each represents a line in the language
+			 Each Node contains a Parse, Print, and Exec Function
+  main.py #contains objects tokenizer, parser, and executor 
+
+Run via
+  'python main.py <name of file>'
+    i.e.
+      'python main.py program1.core'
+

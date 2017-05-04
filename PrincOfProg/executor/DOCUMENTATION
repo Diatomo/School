@@ -1,0 +1,264 @@
+Author = Charles C. Stevenson
+Date = 02/13/2017
+
+
+Overall Design
+
+  I have a Tokenizer, this creates a Queue (I might end up making it a list) out of
+  a Core Program. It contains several methods
+=========
+            class Tokenize(object):
+                @params = (fileName) #fileName of core program.
+
+                '''
+                    @closeFile
+                        closes file loaded in f
+                '''
+                def closeFile(self):
+                '''
+                    @currentToken
+                        returns current token loaded in an array
+                        from a split string
+                '''
+                def currentToken(self):
+                '''
+                    @seeNextToken
+                        returns nextToken without setting
+                        the current token
+                '''
+                def seeNextToken(self):
+                '''
+                    @nextToken
+                        sets the next token as the current token
+                '''
+                def nextToken(self):
+                '''
+                    @ProcessTokens
+                        processes each token and print out their specified code
+                '''
+                def processTokens(self):
+===========
+
+  The class is responsible for parsing a file into tokens. ProcessToken Validates the code,
+  currentToken and nextToken are responsible for driving through each token in the file.
+
+  Processing the token is checked against an object that validates the token as being a subset
+  of the grammar. This is done via the Core.py object
+
+==========
+
+            class CoreGrammar(object):
+                '''
+                     Validating Tokens
+                     =================
+                '''
+                '''
+                    @ValidateTokens
+                        main method that validates each token passed in from a tokenizer
+                        if it a token is valid then it will return a valid code defined
+                        in one of its data members
+                '''
+                def validateTokens():
+                '''
+                    @validateKeyWords
+                        validates reseved symbols or words if they aren't defined
+                        in the reserved words or symbols dictionaries then they
+                        are invalid!
+                '''
+                def validateKeyWords():
+                '''
+                    @validateInteger
+                        Integers can be composed of strings of integers
+                        for instance 123, each individual integer '1'
+                        '2', needs to be checked on several different
+                        criteria
+                '''
+                def validateInteger():
+                '''
+                    @validateIdentifier
+                        Identifiers can be composed of numbers and capital letters
+                        for instance 'X123' is valid but 'X1B' is not! Each Identifier
+                        needs to be checked on several different criteria
+                '''
+                def validateIdentifier():
+
+==========
+
+  The Core Grammar object is basically an answer key to validate each category defined in the grammar.
+  The subset of symbols contained within the grammar as defined in dictionaries in the objects attributes,
+  which can be found in the constructor.
+
+  The Tokenizer then creates a Queue of tokens out of each valid token. I was going to try to
+  capitalize on this structure when it came time to parse the tokens. I haven't quite figured out
+  how I'm going to do that yet. But below is the dummy Token Class.
+
+=========
+
+                '''
+                    Dummy class at the moment to keep track of my tokens
+                '''
+                class Token(object):
+
+                    def __init__():
+                        self.__lineNum = lineNumber
+                        self.token = token
+========
+
+
+
+The algorithm to tokenize is in tokenize.py
+  but is simple
+      #LoadFile
+      #create tokenizer
+      #if the current token isn't end of file
+        #grab next token
+        #validate it and print out error or correct code
+
+Example can be found by tokenize.py
+
+===========
+
+    Builds and Parses a tree     || ||| || |
+                                 || | | | ||
+                                 || ||| | ||
+==========
+
+#                                    Bark                                            #
+'''================================================================================'''
+'''
+    Class : ProgramNode
+        <Prog> ::= program <decl-seq> begin <stmt-seq> end
+        Initiates Parsing
+'''
+'''
+    Class : DeclSeqNode
+        <decl-seq> ::= <decl> | <decl><decl-seq>
+        Header : Static Declarations
+'''
+'''
+    Class : StmtSeqNode
+        <stmt-seq> ::= <stmt> | <stmt><stmt-seq>
+        Header : Container for the main Statements in the program
+            i.e. <assign> | <if> | <loop> | <in> | <out>
+'''
+'''
+    Class : DeclNode
+        <decl> ::= int <id_list>;
+        Header : Container for the main Statements in the program
+            i.e. <assign> | <if> | <loop> | <in> | <out>
+'''
+'''
+    Class : IdListNode
+        <id> ::= <id>, <id_list>;
+        Header : Container for variables
+'''
+'''================================================================================'''
+#                                  Trunk                                             #
+'''================================================================================'''
+
+'''
+    Class : StmtNode
+        <stmt> ::= <assign> | <if> | <loop> | <in> | <out>
+        Body of the program
+'''
+'''
+    Class : AssignNode
+        <assign> ::= <id> = <exp>
+        Variable Updates or Assignments
+'''
+'''
+    Class : IfNode
+        <if> ::= if <cond> then <stmt-seq> end;
+               | if <cond> then <stmt-seq> else <stmt-seq> end;
+        Control Flow
+'''
+'''
+    Class : LoopNode
+        <loop> ::= while <cond> loop <stmt-seq> end;
+        Iteration
+'''
+'''
+    Class : InputNode
+        <in> ::= read <idlist>;
+        Reads : User_Input
+'''
+'''
+    Class : OutputNode
+        <out> ::= write <idlist>;
+  =^.^= Writes : User_Output
+'''
+'''================================================================================'''
+#                        Phloem     &&      Xylem                                    #
+'''================================================================================'''
+'''
+    Class : CondNode
+        <cond> ::= <comp> | !<cond> | [<cond> and <cond>]
+                                    | [<cond> or  <cond>]
+  =^.^= Conditionals : Relations [(X>10)and(Y<8)]
+'''
+'''
+    Class : CompNode
+        <comp> ::= (<fac> <comp-op> <fac>)
+  =^.^=  The organization of the inside of the parentheses:
+                                           [(X>10)and(Y<8)]
+                                            ^____^   ^___^
+'''
+'''
+    Class : ExprNode
+        <expr> ::= <term> | <term> + <expr> | <term> - <expr>
+=^.^=   Expressions handle the or(+) and complements(-) factors
+'''
+'''
+    Class : TermNode
+        <term> ::= <term> | <fac> * <term>
+=^.^=   Handles Ands(+) of Factors
+'''
+'''================================================================================'''
+#                                  Chloroplast                                       #
+'''================================================================================'''
+'''
+    Class : FacNode
+        <fac> ::= <int> | <id> | (<expr>)
+=^.^=   Atoms (LR of equal sign) in an expression || comparison
+'''
+'''
+    Class : CompOpNode
+        <compOp> ::= != | == | < | > | <= | >=
+=^.^=   Comparison Operations
+'''
+'''
+    Class : IdNode
+        <id> ::= |A|B|C|...|X|Y|Z|
+=^.^=   Letters
+'''
+'''
+    Class : DigitNode
+        <digit> ::= |0|1|2|3|4|5|6|7|8|9|
+=^.^=   NoomBahs!
+'''
+
+REFERENCE:
+
+                                 - CORE LANGUAGE -
+    ----------------------------------------------------------------------------
+    +    <Prog> ::= program <decl-seq> begin <stmt-seq> end
+    +    <decl-seq> ::= <decl> | <decl><decl-seq>
+    +    <stmt-seq> ::= <stmt> | <stmt><stmt-seq>
+    +    <decl> ::= int <id_list>;
+    +    <id> ::= <id>, <id_list>;
+    +    <stmt> ::= <assign> | <if> | <loop> | <in> | <out>
+    +    <assign> ::= <id> = <exp>
+    +    <if> ::= if <cond> then <stmt-seq> end;
+    +           | if <cond> then <stmt-seq> else <stmt-seq> end;
+    +    <loop> ::= while <cond> loop <stmt-seq> end;
+    +    <in> ::= read <idlist>;
+    +    <out> ::= write <idlist>;
+    +    <cond> ::= <comp> | !<cond> | [<cond> and <cond>] | [<cond> or  <cond>]
+    +    <comp> ::= (<fac> <comp-op> <fac>)
+    +    <expr> ::= <term> | <term> + <expr> | <term> - <expr>
+    +    <term> ::= <term> | <fac> * <term>
+    +    <fac> ::= <int> | <id> | (<expr>)
+    +    <compOp> ::= != | == | < | > | <= | >=
+    +    <id> ::= |A|B|C|...|X|Y|Z|
+    +    <digit> ::= |0|1|2|3|4|5|6|7|8|9|
+    ----------------------------------------------------------------------------

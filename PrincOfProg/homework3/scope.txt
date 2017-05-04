@@ -1,0 +1,125 @@
+
+Charles C. Stevenson
+
+1. (3 points) For the following segment of pseudo-code, assume that the language being used here has scope rules similar to
+Java (except the language allows nested methods) – the scope of a variable is the block from the line it is declared to the
+end of the block it is declared in. Provide a) the output of this program and b) in 2-5 short sentences defend your answer.
+Note that if you think the program will terminate with an error due to its scope rules, give that as your answer to part a)
+and then explain where the error occurs and why in part b).
+
+int x = 1, y = 2;
+void outer():
+ int x = y
+ void nested():
+ 	println("Nested"+x+","+y)
+ int y = 3
+ nested()
+ println("Outer: "+x+","+y)
+
+void main():
+ outer()
+ println("Main: "+x+","+y)
+
+Output
+	Nested 2,3
+	Main: 1,2
+
+For Java, variables can be redeclared in the local scope are used in the local scope
+but fall out of scope when the local space falls out of scope. However; in Java global
+or class members are referred to with a prefix this, therefore variables declared in local
+space with the same name are just local variables. Therefore, the code should
+compile and output the above.
+
+
+2. (3 points) Now for the segment of pseudo-code above, assume that the language being used here has scope rules similar to
+C# or Pascal - the scope of a variable is the entire block that it is declared in. Provide a) the output of this program and b) in
+2-5 short sentences defend your answer. Note that if you think the program will terminate with an error due to its scope
+rules, give that as your answer to part a) and then explain where the error occurs and why in part b).
+
+int x = 1, y = 2;
+void outer():
+ int x = y //ERROR
+ 	println("Nested "+x+","+y)
+ int y = 3
+ nested()
+ println("Outer: "+x+","+y)
+
+void main():
+ outer()
+ println("Main: "+x+","+y)
+
+If this pseudo code is representative of C# of Pascal scope rules then the program should throw 
+an error at int x = y. It is an error for a local variable declaration space and a 
+nested local variable declaration space to contain elements with the same name. I'm assuming here
+that int x =1 , y = 2 is apart of the local variable space of a class found in C#. 
+
+3. (3 points) Now for the segment of pseudo-code above, assume that the language being used here has dynamic scope as
+discussed in class and in the textbook. Provide a) the output of this program and b) in 2-5 short sentences defend your
+answer. Note that if you think the program will terminate with an error due to its scope rules, give that as your answer to
+part a) and then explain where the error occurs and why in part b).
+
+int x = 1, y = 2;
+void outer():
+ int x = y
+ void nested():
+ 	println("Nested "+x+","+y)
+ int y = 3
+ nested()
+ println("Outer: "+x+","+y)
+
+void main():
+ outer()
+ println("Main: "+x+","+y)
+
+
+Output:
+	Nested 2,3
+	Main: 2,3
+
+With Dynamically scoped variables, locally defined variables override any other variable with the same
+name throughout the program. Therefore when X and Y are redeclared in outer() it overrides the x and y
+declaration in the beginning and are carried throughout the program.
+
+4. Consider the following segment of pseudo-code:
+
+void mystery(int x, int y):
+ x = y
+ y = 3 * x
+ println("Mystery: "+x+","+y)
+
+void main():
+ int x = 1, y = 2;
+ mystery(x, y)
+ println("Main: "+x+","+y)
+
+a. (3 points) Suppose the call to mystery in the main method is using call-by-value. Provide the output of this
+program and in 2-3 short sentences defend your answer. Your defense must include a description of how the
+method is setting up and using the local variables on the call stack for the procedure mystery.
+
+	Output:
+		Mystery: 2, 6
+		Main: 1, 2
+
+The variables when they are called by value are placed into the local scope in the functions subroutine on the stack.
+These variables are held in the activation record, but instead of copying addresses rather the actual values are copied.
+Therefore, the parameters are just copied into the local space of the function and fall out of scope when the function ends.
+
+b. (3 points) Now suppose the call to mystery in the main method is using call-by-reference for both variables.
+Provide the output of this program and in 2-3 short sentences defend your answer. As above, your defense must
+include a description of how the method is setting up and using the local variables on the call stack for the
+procedure mystery.
+	
+	Output:
+		Mystery: 2,6
+		Main: 2,6
+
+When a call is call-by-reference the formal parameters addresses are copied into the activation record.
+The activation record is kind of like a frame of a book on a bookshelf that represents the function. Things
+like return addresses, saved registers, and caller addresses, as well as local variables.
+The Subroutine then dereferences these addresses when it references a formal parameter.
+
+
+
+
+
+

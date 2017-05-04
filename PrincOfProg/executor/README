@@ -1,0 +1,14 @@
+Author = Charles C. Stevenson
+Date = 02/13/2017
+
+Files required
+  CoreGrammar.py
+  Token.py
+  Tokenizer.py
+  main.py
+
+Run via
+  'python3 main.py <name of file>'
+    i.e.
+      'python3 main.py program1.core'
+

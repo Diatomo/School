@@ -1,0 +1,62 @@
+
+
+'''
+===================================
+    Author : Charles Stevenson
+    Date : 02/13/2017
+    Description:
+        Tokenizer for the CORE
+        programming language
+===================================
+'''
+
+def tokenList(language):
+        newDict = {}
+        f = open(language, 'r')
+        category = None
+        for line in f:
+            line = line[:-1]
+            line = line.split(':')
+            if (len(line) == 1):
+                category = line
+            else:
+                newDict[category][line[0]].update(line[1])
+        return newDict
+
+class Tokenize(object):
+
+    def __init__(self, fileName, language):
+        self.f = open(fileName, 'r')
+        self.line = self.f.readline()
+        self.currentIndex = 0
+        self.tokens = tokenList(language)
+        #self.tokenList = [a for a in dir(self.tokens) if not a.startswith('__')]
+
+    def closeFile():
+        self.f.close()
+
+    def currentToken(self):
+        return self.line[self.currentIndex]
+
+    def nextToken(self):
+        if (self.currentIndex < len(self.line)):
+            self.currentIndex += 1
+        else:
+            self.currentIndex = 0
+            self.line = self.f.readline()
+            self.line = self.line[:-1]
+            self.line = line.split[' ']
+        self.currentToken()
+
+    def printTokenCode(self, currToken):
+        found = False
+        for i in range(len(self.tokenList)):
+            print((str(self.tokens.self.tokenList[i])) + " token " + str(token))
+            #for key, value in self.tokens..items():
+            #    print(key)
+             #   if (currToken == key):
+              #      print(value)
+               #     found = True
+                #elif (found):
+                 #   break
+

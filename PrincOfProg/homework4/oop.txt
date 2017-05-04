@@ -1,0 +1,246 @@
+CSE 3341 - Homework 4: OOP
+1. (13 points) Think about the full object-oriented version of the CORE interpreter that we've discussed in class. Suppose we
+wanted to use polymorphism in the implementation of the Stmt class. That is – instead of having a Stmt class that is a
+container for another node type (Assign, In, Out, If or Loop) we want to have Stmt be an abstract class that defines the
+methods parse, execute and print. Assign, In, Out, If and Loop will be derived classes of the Stmt abstract class. (In Java
+terminology, Stmt will be an interface and the others will be classes that implement the Stmt interface, in C++ terminology
+Stmt will be a purely abstract class containing only virtual methods).
+
+Provide – in pseudocode or in Java or C++ – a definition of the abstract class/interface Stmt, implementations of the classes
+derived from Stmt (including their parse, print and execute methods) and the implementation of the StmtSeq class that
+uses this new structure for Stmt. (HINT: Stmt is an abstract class, so StmtSeq cannot construct an object from it. You are
+going have to think about how the parse method for StmtSeq will work given this constraint.)
+
+
+from abc import ABCMeta, abstractmethod
+
+
+class StmtSeq:
+	def __init__(self):
+		self.s = None
+
+	def parseStmtSeq(self, t):
+		tok = currentToken()	
+		if (tok == 'if'):#Nodes are set by tok
+			self.s = If()
+		elif (tok == "while"):
+			self.s = Loop()
+		elif (tok == "read"):
+			self.s = Input()
+		elif (tok == "write"):
+			self.s = Output()
+		else:
+			self.s = Assign()
+		self.s.parse(t)
+		if there is more code:
+			self.ss = StmtSeq()
+			self.ss.parseStmtSeq(t)
+
+	def printStmtSeq(self):
+		self.s.print()
+		if (self.ss != None):
+			self.ss.printStmtSeq()
+
+	def execStmtSeq(self):
+		self.s.exec()
+		if (self.ss != None):
+			self.ss.execStmtSeq()
+
+class Stmt:
+	__metaclass__ = ABCMeta
+
+	@abstractmethod
+	def parse(t):
+		pass
+
+	@abstractmethod
+	def print():
+		pass
+
+	@abstractmethod
+	def exec():
+		pass
+
+class Assign(Stmt):#inherits stmt abstract base class
+
+	def __init__(self):#constructor
+		self.idn = None
+		self.expr = expr()
+
+	def parse(self):#implementation of stmt parse
+		self.idn = IdNode(currentToken) #populate Id Node
+		self.idn.parseId(t) #parse Id
+		consumeTokens()
+		self.expr.parseExpr(t) #populate expression
+		
+	def print(self):#implementation of stmt print
+		print(self.idn = self.expr)
+
+	def exec(self):#implementation of stmt exec
+		self.id.setIdValue(self.expr.execExpr())
+
+class Input(Stmt):#inherits statement abstract base class
+
+	def __init__(self):#constructor
+		self.IdList = None
+
+	def parse(self, t):#parse implementation
+		tok = t.currentToken()#Consumes Read
+		self.IdList = IdListNode()
+		self.IdList.parseIdList(t)
+		tok = t.nextToken()#Consumes ;
+		tok = t.nextToken()
+
+	def print(self):#print impletation
+		print(IdList.printIdList())
+
+	def exec(self):#exec implementation
+		self.IdList.execIdList()
+
+class Output(Stmt):#inherits statement abstract base class
+
+	def __init__(self):
+		self.IdList = IdListNode()
+
+	def parse(self, t):#parse implementation
+		tok = t.currentToken()# write
+		self.IdList.parseIdList(t)
+		tok = t.nextToken()# ;
+		tok = t.nextToken()
+
+	def print(self):#implementation of stmt print
+		self.IdList.printIdList()
+
+	def exec(self):#implementation of stmt exec
+		self.IdList.execIdList()
+
+class If(stmt):
+
+	def __init__(self):
+		self.cond = CondNode()
+		self.thenSeq = StmtSeqNode()
+		self.elseSeq = None
+		self.altNo = 1
+
+	def parse(self,t):#implementation of stmt parse
+		self.cond.parseCond(t)
+		tok = t.nextToken()#Consumes end of cond )
+		self.thenSeq.parseStmtSeq(t)
+		tok = t.currentToken()#Leashes else
+		if (tok == "else"):
+			t.nextToken()#Consume else
+			self.altNo = 2
+			self.elseSeq = StmtSeqNode()
+			self.elseSeq.parseStmtSeq(t)
+		t.nextToken()
+
+	def print(self):#implementation of stmt print
+		sys.stdout.write("  if ")
+		self.cond.printCond()
+		sys.stdout.write(" then\n")
+		self.thenSeq.printStmtSeq()
+		if (self.altNo == 2):
+			sys.stdout.write("  else\n")
+			self.elseSeq.printStmtSeq()
+
+	def exec(self):#implementationof stmt exec
+		if (self.cond.execCond()):
+			self.thenSeq.execStmtSeq()
+		else:
+			self.elseSeq.execStmtSeq()
+
+class Loop(stmt):
+		
+		def __init__(self):
+			self.cond = CondNode()
+			self.ss = StmtSeqNode()
+
+		def parse(self, t):
+			tok = t.currentToken()
+			self.cond.parseCond(t)
+			tok = t.nextToken()
+			self.ss.parseStmtSeq(t)
+			tok = t.currentToken()
+			tok = t.nextToken()
+
+		def print(self):
+			print(while %s loop %s end, (self.cond.printCond(), self.ss.printStmtSeq()))
+
+		def exec(self):
+			while(self.cond.execCond()):
+				self.ss.execStmtSeq()
+
+2. (12 points) Suppose we have the following Java classes:
+public class Foo {
+ private String myString;
+ public Foo(String m) { this.myString = m; }
+ public int length() { return this.myString.length(); }
+
+}
+public class Bar extends Foo {
+ private String str;
+ public Bar(String s1, String s2) {
+ super(s1);
+ this.str = s2;
+ }
+ public int length() { return this.str.length(); }
+ public String getStr() { return this.str; }
+}
+public class FooUtils {
+ public void fooCheck(Foo f) { System.out.println("It's a Foo!"); }
+ public void fooCheck(Bar b) { System.out.println("It's a Bar!"+b.getStr()); }
+}
+
+
+a. As discussed in class, if we removed the call to super(s1) in the constructor for Bar, this code would not compile.
+Explain in 1-3 short sentences what the call to super(s1) does in the constructor for Bar and why it is necessary
+here.
+
+	The point of having super is to instiantiate the object of the parent class in order to inherit the implementations
+	found in the parent class (foo) into the subclass (bar). Therefore, bar cannot use Foo's methods without and instiantiation
+	of foo.
+
+b. Suppose a program contains the following lines of code:
+…
+Bar b = new Bar("This is a","test");
+int x = b.length();
+
+The call b.length() uses dynamic dispatch as discussed in class. Explain in 2-5 short sentences which length() method
+will be executed by this call and why. Your explanation must include a description of how the compiler builds the code
+(i.e. what is happening on the heap and in the call stack).
+
+	This would call bar's definition of length because bar has an ovveridden definition of length. Therfore, when the object
+	is dotted with the method it looks up the method on a table and call's the code that corresponds to that method. Because
+	length is redefined in bar it overrides the implementation in foo. 
+
+c. Suppose a program contains the following lines of code:
+…
+Bar b = new Bar("This is a","test");
+Foo f = (Foo) b;
+FooUtils.fooCheck(b);
+FooUtils.fooCheck(f);
+
+	The calls FooUtils.fooCheck(b); and FooUtils.barCheck(f) use static dispatch as discussed in class. Explain in 2-5 short
+	sentences which fooCheck() method will be executed for each of the calls and why. You may (and probably should)
+	plug this code into a program and execute it to see what behavior it has, but your explanation must explain why static
+	dispatch causes it to behave this way.
+
+	Static Dispatch uses the type of the object to call methods accordingly. Therefore, It should call the respective fooCheck(Foo f) for f
+	and then call fooCheck(Bar b) for bar. Static dispatch behaves this way because it is predictable.
+
+
+d. Suppose a program contains the following lines of code:
+…
+Foo f = new Foo("Hello world!");
+Bar b = (Bar) f;
+FooUtils.fooCheck(b);
+FooUtils.fooCheck(f);
+
+If you attempt to do this, Java will throw a ClassCastException at runtime on the line Bar b = (Bar) f. The code in part (c)
+runs without an exception, so why will this not work? Explain in 2-5 short sentences why this code cannot work. Your
+answer must discuss polymorphism and inheritance.
+
+The reason is because foo is a super class of bar and therefore bar represents a polymorphic class of foo. However; because foo
+is the superclass it isn't a polymorphism of bar. Therefore, when one tries to cast foo into bar it throws a ClassCastException in Java.
+This is because bar inherits features from foo and foo doesn't inherit from bar. Therefore, bar can be synonymous with foo because it inherits
+all of foo and then can override or define its own methods. However; foo doesn't inherit from bar and cannot be synomous in type.
