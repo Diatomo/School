@@ -1,0 +1,21 @@
+
+
+Waveform Directory
+
+Contains files to download and convert youtube videos into wav files.
+The wav files should match the midi files in the directory '~/MIDI/'
+
+***
+NOTICE
+***
+	DO NOT run scripts on the remote server as it doesn't have the memory storage.
+	================================================================================
+	PLEASE COPY them into a directory on your local machine
+
+To Run:
+	-copy the scripts into a directory on your local machine
+	-python3 downloadSongs.py. **Youtube-dl requires a dependency, you'll notice a warning if you don't have it**
+	-run the bash script in the newly created 'songs' directory.
+
+	
+	All the files not should be downloaded and converted to wavs
