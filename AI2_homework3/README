@@ -1,0 +1,15 @@
+
+
+Author = Charles C. Stevenson
+
+required files:
+    game_codedata_train.dat
+    game_codedata_test.dat
+    Point.py
+    Stumpy.py
+
+To Run:
+
+    python3 main.py
+
+
