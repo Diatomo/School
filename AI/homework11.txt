@@ -1,0 +1,84 @@
+Author:      Charles C. Stevenson
+Date         12/06/2016
+Description: Homework 11 for Artificial Intelligence
+
+1.  Using the bigram probabilities above, compute the probability of each of the following
+    sentences (or sentence fragments).  Do not be alarmed if the numbers are very small
+    (they will be).  Ignore punctuation and case in your computations.  Do not use
+    logarithms as discussed in class, just show how you calculate the probabilities and
+    give the probability of the sentence using the partial language model given above.
+
+Uncle Henry and Aunt Em had a big bed in the corner.
+        P(henry|uncle) =  0.867
+        P(and|henry)   =  0.154
+        P(aunt|and)    =  0.003
+        P(em|aunt)     =  0.821
+        P(had|em)      =  0.125
+        P(a|had)       =  0.053
+        P(big|a)       =  0.025
+        P(bed|big)     =  0.020
+        P(in|bed)      =  0.143
+        P(the|in)      =  0.304
+        P(corner|the)  =  0.001
+        =======================
+        P(sentence) = 0.867*0.154*0.003*0.821*0.125*0.053*0.025*0.020*0.143*0.304*0.001
+                    = 4.74 * 10^-14
+There was a farmer
+        P(was|there)   =  0.203
+        P(a|was)       =  0.108
+        P(farmer|a)    =  0.003
+        =======================
+        P(sentence)  = 0.203*0.108*0.003
+                     = 6.58 * 10^-5
+
+Dorothy lived in the middle of the floor
+        P(lived|dorothy) = 0.003
+        P(in|lived)      = 0.421
+        P(the|in)        = 0.304
+        P(middle|the)    = 0.005
+        P(of|middle)     = 0.929
+        P(the|of)        = 0.394
+        P(floor|the)     = 0.002
+        ========================
+        P(sentence) = 0.003*0.421*0.304*0.005*0.929*0.394*0.002
+                    = 1.41 * 10^-9
+
+Dorothy was a farmer.
+        P(was|dorothy)   = 0.049
+        P(a|was)         = 0.108
+        P(farmer|a)      = 0.003
+        ========================
+        P(sentence) = 0.049*0.108*0.003
+                    = 1.59 * 10^-6
+
+2.  Using the bigram probabilities above, compute probability of each of the following sentences or
+    sentence fragments (ignore puncutation and case in your calculations).  Which sentence is the
+    most probable?  Which is the least probable?  Why do some of these word orderings give you
+    higher probabilities than others?  Remember to base your answer to this question on the data
+    and what the n-gram calculation is doing, not just on a reaction to what good and bad English
+    sounds like.  (HINT: look at the underlying probabilities for the bigrams).
+
+P(There was a farmer) = 6.58 * 10^-5 === Most Likely to Occur
+P(Farmer a was there) = 2.4 * 10^-9
+P(Was a farmer there) = 1.69 * 10^-5
+P(A was farmer there) = 2.08 * 10^-9 === Least Likely to Occur
+
+  Why do some of these word orderings give you higher probabilities than others?
+
+      Some give higher probabilities because we are looking at the probability
+      of a word given the word that comes before it. Because it is dependent
+      on the word that comes before it, the probability changes depending on
+      the previous word
+
+3.  Using the probabilities above, give the probability of each sentence below and determine
+    which is most probable given the above language model.  Remember to ignore punctuation and case.
+
+P(Dorothy was a farmer)     = 1.59 * 10^-5
+P(Dorothy was a lion)       = 1.59 * 10^-5
+P(Dorothy was a scarecrow)  = 3.18 * 10^-5 === Most Likely to Occur
+P(Dorothy was a dog)        = 5.29 * 10^-6 === Least Likely to Occur
+P(Dorothy was a witch)      = 2.12 * 10^-5
+
+
+
+

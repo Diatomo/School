@@ -1,0 +1,24 @@
+HEY!
+
+Author: Charles Stevenson
+Date: 09/20/2016
+
+To compile do
+
+	'python UCsearch.py "ABCDP ""
+	'python AStarSearch.py "ABCDP ""
+
+		...or any variation on the arguments
+It'll display a solution space
+then the path to the solution
+
+It shows the parent string
+	ABCDP | 
+It Shows the action string 
+	CD | ABP | ABP
+
+		The action string is in the center and is concatenated
+		in the direction that it is headed.
+
+Then it shows the cost and the depth
+

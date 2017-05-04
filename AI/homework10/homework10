@@ -1,0 +1,68 @@
+
+Author:Charles Stevenson
+Title: Homework10
+Description: Artificial Intelligence for homework 10
+
+1)(20 points) Imagine we have an agent on a retail website.  The agent is trying to predict which customers will respond to a particular advertised special (so that the website can tailor ads to customers).  Suppose we have the following data showing attributes of customers who have and have not responded to the special so far, and we want to try to learn a decision tree over this data to predict if a customer will respond to the ad.  DO NOT construct the entire decision tree - just provide all of the possible "top level" splits of this data and then indicate which question should be the first question asked.
+
+/*note*/
+The numbers are the rows that responded to the add.
+The row(top) YES NO are if they answered the title (i.e. PURCHASED BOOK)
+The column(left) YES NO are if they responded to the ad
+/**/
+======================================
+YES: 1,4,5,9
+NO: 2,3,6,7,8,10
+          PURCHASED BOOK A?
+     YES		              NO
+YES: 1,4,5                 9
+NO:  2,3                   6,7,8,10
+======================================
+YES: 1,4,5,9
+NO: 2,3,6,7,8,10
+          PURCHASED BOOK B?
+     YES		               NO
+YES: 4,9                   1,5
+NO:  7                     2,3,6,8,10
+======================================
+YES: 1,4,5,9
+NO: 2,3,6,7,8,10
+          Has Facebook Account?
+     YES		                   NO
+YES: 1,4,9                     5
+NO:  6                         2,3,7,8,10
+======================================
+YES: 1,4,5,9
+NO: 2,3,6,7,8,10
+          Premium Account?
+     YES		               NO
+YES: 1,4                   5,9
+NO:  2,3                   6,7,8,10
+======================================
+
+Which is the best question to ask first?
+Does the User have a Premium Account, because on the next question you can terminate the left part of the tree
+into two categories.
+
+2) (30 points)  Suppose we are attempting to train a perceptron to perform a few logical operations on some variables.  For the tables below, each xn is an input to the perceptron and each y is the correct output label.  For each table, provide a set of weights for a perceptron that will correctly classify the elements in that table (i.e. will take in each of the xn values as inputs and produce the output y for that row in the table).  Each table should have a single set of weights.  Do not forget to include a weight for the bias term.  Label your weights "wn" where w1 is the weight on input x1, w2 is the weight on input x2, etc.  Your bias weight should use the label "wb".  You should use a threshold function with a threshold of 0 as discussed in class (i.e. anything greater than 0 is a 1 in the output, less than or equal to 0 is a zero).  Note that these should be single neuron perceptrons, not multi-layer perceptrons. 
+
+2a)
+
+wb:-1
+w1:0.3
+w2:0.8
+w3:0.6
+
+2b)
+
+wb:-1
+w1:0.3
+w2:0.8
+w3:0.8
+
+2c)
+wb:0.6
+w1:-0.2
+w2:-0.4
+w3:0.1
+

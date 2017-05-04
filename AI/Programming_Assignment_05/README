@@ -1,0 +1,14 @@
+
+Author: Charles Stevenson
+
+To run do:
+
+  python perceptron.py
+
+  this will print off all the data that is already in the results.txt file
+
+If you want to test any more data files, just make sure the format is correct I.e.
+
+weights (n) (w1,w2,w3,wb)
+x1,x2,x3,bias,expected
+x1,x2,x3,bias,expected...repeat

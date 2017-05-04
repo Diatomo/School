@@ -1,0 +1,19 @@
+PROGRAMMING ASSIGNMENT 2
+	Author : Charles Stevenson
+
+To Compile
+
+	run commands:
+
+		for Reflex Agent:
+			
+			'python AI_1.py'
+		
+		for Reflex Agent with State:
+
+			'python AI_2.py'
+
+Reflex Agent uses 'reflex1.txt' as input file
+Reflext Agent with state uses 'conveyerA.txt' and 'conveyerB.txt'
+
+Make sure these files are in the same directory as the .py files.

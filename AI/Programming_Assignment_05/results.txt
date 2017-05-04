@@ -1,0 +1,74 @@
+=========================
+FILE: DataSetWorks.txt
+[0 0 0]: -2.94517391369 -> 0
+[0 0 1]: -2.07998334724 -> 0
+[0 1 0]: -0.682333158913 -> 0
+[0 1 1]: 0.182857407536 -> 1
+[1 0 0]: -1.90529051677 -> 0
+[1 0 1]: -1.04009995032 -> 0
+[1 1 0]: 0.357550238008 -> 1
+[1 1 1]: 1.22274080446 -> 1
+
+=========================
+=========================
+FILE: DataSetFour.txt
+[0 0 0]: -1.08822923658 -> 0
+[0 0 1]: -1.12677867643 -> 0
+[0 1 0]: -1.39773499709 -> 0
+[0 1 1]: -1.43628443695 -> 0
+[1 0 0]: -2.31236350309 -> 0
+[1 0 1]: -2.35091294295 -> 0
+[1 1 0]: -2.62186926361 -> 0
+[1 1 1]: -2.66041870346 -> 0
+
+This does not converge because it is not linearly separable.
+That is, inividually x1, x2, and x3 (rows 2,3, and 5) all
+give an expected value of 1, which means they require weights
+that exceeds the threshold, however; when these weights
+are placed together i.e. row 4, then the expected is a value 
+of 0. Meaning they are not linearly separable.
+
+=========================
+=========================
+FILE: DataSetThree.txt
+[0 0 0]: 0.319109505423 -> 1
+[0 0 1]: -0.780559687943 -> 0
+[0 1 0]: -0.0478867289401 -> 0
+[0 1 1]: -1.14755592231 -> 0
+[1 0 0]: -0.11540827484 -> 0
+[1 0 1]: -1.21507746821 -> 0
+[1 1 0]: -0.482404509203 -> 0
+[1 1 1]: -1.58207370257 -> 0
+
+This does not converge because it is not linearly separable.
+That is, inividually x1, x2, and x3 (rows 2,3, and 5) all
+give an expected value of 1, which means they require weights
+that exceeds the threshold, however; when these weights
+are placed together i.e. row 4, then the expected is a value 
+of 0. Meaning they are not linearly separable.
+
+=========================
+=========================
+FILE: DataSetTwo.txt
+[0 0 0]: -1.73213831768 -> 0
+[0 0 1]: -0.122776676283 -> 0
+[0 1 0]: -0.403308443534 -> 0
+[0 1 1]: 1.20605319787 -> 1
+[1 0 0]: -0.887069529537 -> 0
+[1 0 1]: 0.722292111862 -> 1
+[1 1 0]: 0.441760344612 -> 1
+[1 1 1]: 2.05112198601 -> 1
+
+=========================
+=========================
+FILE: DataSetOne.txt
+[0 0 0]: 0.876746191708 -> 1
+[0 0 1]: 0.653440548141 -> 1
+[0 1 0]: -0.917201015931 -> 0
+[0 1 1]: -1.1405066595 -> 0
+[1 0 0]: 1.09279856912 -> 1
+[1 0 1]: 0.869492925552 -> 1
+[1 1 0]: -0.70114863852 -> 0
+[1 1 1]: -0.924454282087 -> 0
+
+=========================
