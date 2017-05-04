@@ -1,0 +1,25 @@
+To run have all the files contained within the zip in the same directory!
+	
+	'''
+		centroid.py
+		exploration.py
+		kmeansoop.py
+		kmeans.py
+		main.py
+		mainWine.py
+		mainDim.py
+		preProcess.py
+		point.py
+		TwoDimEasy.csv
+		TwoDimHard.csv
+		wine.csv
+	'''
+
+To run
+	k is an integer value or the number of clusters
+
+	Wine data set = python mainWine.py k
+	Dim Hard Data set = python mainDim.py k
+	Dim Easy Data set = python main.py k
+
+

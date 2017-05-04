@@ -1,0 +1,16 @@
+
+
+Dependencies:
+	python3 pandas
+	python3 numpy
+	Custom Statistic.py need to be in the same directory as main.py
+
+To Run:
+	python3 main.py
+
+
+The output will be a series of matrices
+First Matrix = Averages
+Second Matrix = Standard Deviations
+Third Matrix = T-Scores
+Fourth Matrix = p-Values
