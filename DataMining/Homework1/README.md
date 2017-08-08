@@ -5,7 +5,8 @@ This was about experimenting with proximity measures between two different data 
 in unsupervised learning methods that eventually led to k-means nearest neighbor algorithm.
 
 # Dependencies:
-Make these files are in the same directory as iris.py and income.py:
+Make these files are in the same directory as iris.py and income.py
+
 	income_tr.csv
 	Iris.csv
 	python-pandas
