@@ -1,0 +1,1340 @@
+
+<html>
+	<head>
+		<title></title>
+		<!-- THIS IS THE CDN (Content Network Delivery) Basically loads all the packages from the web-->
+		<body oncontextmenu = "return false;">
+		<script src="https://code.createjs.com/createjs-2015.05.21.min.js"></script>
+		<canvas id="canvas" width="4000" height="2600">Alternative Content</canvas>
+                 </form>
+<script>
+
+//===================================================================================================================================================
+//INITIALS
+//===================================================================================================================================================
+		var colors = ["#FF0080","#FF00FF", "#4000FF", "#0040FF", "#00FFFF", "#00FF40", "#80FF00", "#FFFF00", "#FF0000",
+					  "#FF0080","#FF00FF", "#4000FF", "#0040FF", "#00FFFF", "#00FF40", "#80FF00", "#FFFF00", "#FF0000"];
+		var toneColors = ["#003366","#996699","#CCFF33","#00FF99","#F08080"];
+		var onColor = "#F08080";
+		var offColor = "#000000";
+		var edit = new createjs.Text("EDIT MODE", "100px Impact", "#FFFFFF");
+		var soundLead = ["A2","A3","C3","C4","D3","E3","E4","G3"];
+		var soundMallet = ["mA2","mA3","mC3","mC4","mD3","mE3","mE4","mG3"];
+		var soundPad = ["pA2","pA3","pC3","pC4","pD3","pE3","pE4","pG3"];
+		var soundChimes = ["cC", "cD", "cE", "cF", "cG", "cA", "cB", "cC2"]; 
+		var soundDrums = ["dC", "dD", "dE", "dF", "dG", "dA", "dB", "dC2"];
+		var soundDrums2 = ["drA","drB","drC"];
+		var soundDryBells = ["bC", "bD", "bE", "bF", "bG", "bA", "bB", "bC2"];
+		var soundFlange = ["fC", "fD", "fE", "fF", "fG", "fA", "fB", "fC2"];
+		var soundMinorToMajor = ["mmC", "mmD", "mmE", "mmF", "mmG", "mmA", "mmB", "mmC2"];
+		var soundPureVibes = ["purC", "purD", "purE", "purF", "purG", "purA", "purB","purC2"];
+		var soundSilkHorns = ["slkC", "slkD", "slkE", "slkF", "slkG", "slkA", "slkB", "slkC2"];
+		var soundSogawni = ["sogC", "sogD", "sogE", "sogF", "sogG", "sogA", "sogB", "sogC2"];
+		var soundVoice = ["voiceC", "voiceD", "voiceE", "voiceF", "voiceG", "voiceA", "voiceB", "voiceC2"];
+		var numbers = ["0","1","2","3","4","5","6","7","8","9"];
+
+		var textInstances = [];
+		var helpInstances = [];
+		var toneAnimation = [];
+		var sweepingIgnite;
+		
+		//Matrix Properities
+		//=========================================
+		//var MAT_HEIGHT = soundId.length;
+		//var MAT_WIDTH = 16;
+		var NODE_SIZE = 40; 
+		var MAT_HEIGHT_BACKGROUND = canvas.width/NODE_SIZE;
+		var MAT_WIDTH_BACKGROUND = canvas.height/NODE_SIZE;
+		var NODE_SPACING = 1; 
+		var STARTING_POS_HORIZ = canvas.width/2 - 400; 
+		var STARTING_POS_VERT = canvas.height/2 - 600;
+		//=========================================
+		
+		//Text
+		//=========================================
+		var text = new createjs.Text("Creative Study", "40px Calibri", "#FFFFFF");	
+		var edit = new createjs.Text("EDIT MODE", "100px Impact", "#FFFFFF");
+		//=========================================
+
+		//stage properties
+		//=========================================
+		var stage;
+		var queue;
+
+		//sound loop
+		//=======================================
+		var milliSecondsInMin = 60000;
+		var beatsPerMinute = 200;
+		var bpm = milliSecondsInMin / beatsPerMinute;
+		var iterating = false;
+		
+		//ToneMatrix Array and Drag
+		//=========================================
+		var dragInterval;
+		var toneMatrices = [];
+		//=========================================
+
+		//loop
+		var milliSecondsInMin = 60000;
+		var beatsPerMinute = 200;
+		var bpm = milliSecondsInMin / beatsPerMinute;
+		var cascading;
+		var iterating = false;
+		var k = 0;
+		var playing = setInterval(play_loop,bpm);
+		
+		//Mouse Event Properties
+		//=========================================
+		var mousedown = false;
+		var editMode = false;
+		var mie = (navigator.appName == "Microsoft Internet Explorer") ? true : false;
+		if (!mie) {
+     			document.captureEvents(Event.MOUSEMOVE);
+     			document.captureEvents(Event.MOUSEUP);
+		}
+		document.onemousedown = function (e) {mouseClick(e);};
+		document.onmousemove = function (e) {updateMouse(e);};
+		document.onkeydown = function(e) {changeEditMode(e);};
+		var mouseX = 0;
+		var mouseY = 0;
+			function init() {
+				var canvas = document.getElementsByTagName('canvas')[0];
+				canvas.getContext("2d");
+				canvas.style.backgroundColor = "F0FFFF";
+				stage = new createjs.Stage(canvas);
+				queue = new createjs.LoadQueue(false);
+				queue.installPlugin(createjs.Sound);
+				queue.loadManifest([{id:"A2", src:"Data/soundfiles/lead/A2.ogg"},
+									{id:"A3", src:"Data/soundfiles/lead/A3.ogg"},
+									{id:"C3", src:"Data/soundfiles/lead/C3.ogg"},
+									{id:"C4", src:"Data/soundfiles/lead/C4.ogg"},
+									{id:"D3", src:"Data/soundfiles/lead/D3.ogg"},
+									{id:"E3", src:"Data/soundfiles/lead/E3.ogg"},
+									{id:"E4", src:"Data/soundfiles/lead/E4.ogg"},
+									{id:"G3", src:"Data/soundfiles/lead/G3.ogg"},
+									{id:"mA2", src:"Data/soundfiles/mallets/A2.ogg"},
+									{id:"mA3", src:"Data/soundfiles/mallets/A3.ogg"},
+									{id:"mC3", src:"Data/soundfiles/mallets/C3.ogg"},
+									{id:"mC4", src:"Data/soundfiles/mallets/C4.ogg"},
+									{id:"mD3", src:"Data/soundfiles/mallets/D3.ogg"},
+									{id:"mE3", src:"Data/soundfiles/mallets/E3.ogg"},
+									{id:"mE4", src:"Data/soundfiles/mallets/E4.ogg"},
+									{id:"mG3", src:"Data/soundfiles/mallets/G3.ogg"},
+									{id:"pA2", src:"Data/soundfiles/pad/A2.ogg"},
+									{id:"pA3", src:"Data/soundfiles/pad/A3.ogg"},
+									{id:"pC3", src:"Data/soundfiles/pad/C3.ogg"},
+									{id:"pC4", src:"Data/soundfiles/pad/C4.ogg"},
+									{id:"pD3", src:"Data/soundfiles/pad/D3.ogg"},
+									{id:"pE3", src:"Data/soundfiles/pad/E3.ogg"},
+									{id:"pE4", src:"Data/soundfiles/pad/E4.ogg"},
+									{id:"pG3", src:"Data/soundfiles/pad/G3.ogg"},
+									{id:"cC", src:"Data/soundfiles/chimes/ChimesC.ogg"},
+									{id:"cD", src:"Data/soundfiles/chimes/ChimesD.ogg"},
+									{id:"cE", src:"Data/soundfiles/chimes/ChimesE.ogg"},
+									{id:"cF", src:"Data/soundfiles/chimes/ChimesF.ogg"},
+									{id:"cG", src:"Data/soundfiles/chimes/ChimesG.ogg"},
+									{id:"cA", src:"Data/soundfiles/chimes/ChimesA.ogg"},
+									{id:"cB", src:"Data/soundfiles/chimes/ChimesB.ogg"},
+									{id:"cA", src:"Data/soundfiles/chimes/ChimesC2.ogg"},
+									{id:"dC", src:"Data/soundfiles/drums/blockHigh.ogg"},
+									{id:"dD", src:"Data/soundfiles/drums/blockLow.ogg"},
+									{id:"dE", src:"Data/soundfiles/drums/Cabasa.ogg"},
+									{id:"dF", src:"Data/soundfiles/drums/Claves.ogg"},
+									{id:"dG", src:"Data/soundfiles/drums/Cowbell2.ogg"},
+									{id:"dA", src:"Data/soundfiles/drums/CowBell.ogg"},
+									{id:"dB", src:"Data/soundfiles/drums/jingle.ogg"},
+									{id:"dC2", src:"Data/soundfiles/drums/shaker.ogg"},
+									{id:"drA", src:"Data/soundfiles/drums2/Drums2Bass.ogg"},
+									{id:"drB", src:"Data/soundfiles/drums2/Drums2_clave.ogg"},
+									{id:"drC", src:"Data/soundfiles/drums2/Drums2Clave2.ogg"},
+									{id:"bC", src:"Data/soundfiles/drybells/DryBellsC.ogg"},
+									{id:"bD", src:"Data/soundfiles/drybells/DryBellsD.ogg"},
+									{id:"bE", src:"Data/soundfiles/drybells/DryBellsE.ogg"},
+									{id:"bF", src:"Data/soundfiles/drybells/DryBellsF.ogg"},
+									{id:"bG", src:"Data/soundfiles/drybells/DryBellsG.ogg"},
+									{id:"bA", src:"Data/soundfiles/drybells/DryBellsA.ogg"},
+									{id:"bB", src:"Data/soundfiles/drybells/DryBellsB.ogg"},
+									{id:"bC2", src:"Data/soundfiles/drybells/DryBellsC2.ogg"},
+									{id:"fC", src:"Data/soundfiles/flange/FlangeC.ogg"},
+									{id:"fD", src:"Data/soundfiles/flange/FlangeD.ogg"},
+									{id:"fE", src:"Data/soundfiles/flange/FlangeE.ogg"},
+									{id:"fF", src:"Data/soundfiles/flange/FlangeF.ogg"},
+									{id:"fG", src:"Data/soundfiles/flange/FlangeG.ogg"},
+									{id:"fA", src:"Data/soundfiles/flange/FlangeA.ogg"},
+									{id:"fB", src:"Data/soundfiles/flange/FlangeB.ogg"},
+									{id:"fC2", src:"Data/soundfiles/flange/FlangeC2.ogg"},
+									{id:"mmC", src:"Data/soundfiles/minortomajor/minorToMajorC.ogg"},
+									{id:"mmD", src:"Data/soundfiles/minortomajor/minorToMajorD.ogg"},
+									{id:"mmE", src:"Data/soundfiles/minortomajor/minorToMajorE.ogg"},
+									{id:"mmF", src:"Data/soundfiles/minortomajor/minorToMajorF.ogg"},
+									{id:"mmG", src:"Data/soundfiles/minortomajor/minorToMajorG.ogg"},
+									{id:"mmA", src:"Data/soundfiles/minortomajor/minorToMajorA.ogg"},
+									{id:"mmB", src:"Data/soundfiles/minortomajor/minorToMajorB.ogg"},
+									{id:"mmC2", src:"Data/soundfiles/minortomajor/minorToMajorC2.ogg"},
+									{id:"purC", src:"Data/soundfiles/purevibes/pureVibesC.ogg"},
+									{id:"purD", src:"Data/soundfiles/purevibes/pureVibesD.ogg"},
+									{id:"purE", src:"Data/soundfiles/purevibes/pureVibesE.ogg"},
+									{id:"purF", src:"Data/soundfiles/purevibes/pureVibesF.ogg"},
+									{id:"purG", src:"Data/soundfiles/purevibes/pureVibesG.ogg"},
+									{id:"purA", src:"Data/soundfiles/purevibes/pureVibesA.ogg"},
+									{id:"purB", src:"Data/soundfiles/purevibes/pureVibesB.ogg"},
+									{id:"purC2", src:"Data/soundfiles/purevibes/pureVibesC2.ogg"},
+									{id:"slkC", src:"Data/soundfiles/silkhorns/SilkHornsC.ogg"},
+									{id:"slkD", src:"Data/soundfiles/silkhorns/SilkHornsD.ogg"},
+									{id:"slkE", src:"Data/soundfiles/silkhorns/SilkHornsE.ogg"},
+									{id:"slkF", src:"Data/soundfiles/silkhorns/SilkHornsF.ogg"},
+									{id:"slkG", src:"Data/soundfiles/silkhorns/SilkHornsG.ogg"},
+									{id:"slkA", src:"Data/soundfiles/silkhorns/SilkHornsA.ogg"},
+									{id:"slkB", src:"Data/soundfiles/silkhorns/SilkHornsB.ogg"},
+									{id:"slkC2", src:"Data/soundfiles/silkhorns/SilkHornsC2.ogg"},
+									{id:"sogC", src:"Data/soundfiles/sogawni/SogawniC.ogg"},
+									{id:"sogD", src:"Data/soundfiles/sogawni/SogawniD.ogg"},
+									{id:"sogE", src:"Data/soundfiles/sogawni/SogawniE.ogg"},
+									{id:"sogF", src:"Data/soundfiles/sogawni/SogawniF.ogg"},
+									{id:"sogG", src:"Data/soundfiles/sogawni/SogawniG.ogg"},
+									{id:"sogA", src:"Data/soundfiles/sogawni/SogawniA.ogg"},
+									{id:"sogB", src:"Data/soundfiles/sogawni/SogawniB.ogg"},
+									{id:"sogC2", src:"Data/soundfiles/sogawni/SogawniC2.ogg"},
+									{id:"voiceC", src:"Data/soundfiles/voice/voiceC.ogg"},
+									{id:"voiceD", src:"Data/soundfiles/voice/voiceD.ogg"},
+									{id:"voiceE", src:"Data/soundfiles/voice/voiceE.ogg"},
+									{id:"voiceF", src:"Data/soundfiles/voice/voiceF.ogg"},
+									{id:"voiceG", src:"Data/soundfiles/voice/voiceG.ogg"},
+									{id:"voiceA", src:"Data/soundfiles/voice/voiceA.ogg"},
+									{id:"voiceB", src:"Data/soundfiles/voice/voiceB.ogg"},
+									{id:"voiceC2", src:"Data/soundfiles/voice/voiceC2.ogg"}])
+
+				canvas.addEventListener("mousedown", mouseClick);
+				canvas.addEventListener("onmousemove",updateMouse);
+				canvas.addEventListener("mouseup", mouseUp);
+				canvas.addEventListener("mouseout",mouseUp);
+				canvas.addEventListener("keydown",changeEditMode);
+				createjs.Ticker.addEventListener("tick",tick);
+			}
+			init();
+//====================================================================================================================================
+//HELPER FUNCTIONS
+//================================================================================================================================
+			
+			function mouseClick(e){
+				mouseX = (event.clientX + document.body.scrollLeft);
+				mouseY = (event.clientY + document.body.scrollTop);
+				var select = [];
+				if ((mouseX >= 50) && (mouseX <= (50 + 55)) && (mouseY >= 50) && (mouseY <= (50 + 55))){
+					helpButton.help = !helpButton.help;
+					if (helpButton.help == true){
+						helpMatrix();
+					}
+					else{
+						playMatrix();
+					}
+				}
+				else if((mouseX >= 150) && (mouseX <= (150 + 55)) && (mouseY >= 50) && (mouseY <= (50 + 55))){
+					killButton.play = !killButton.play;
+					console.log(killButton.play);
+					if (!killButton.play){
+						killButton.shapeCmd = killButton.shape.graphics.clear().beginFill(offColor).drawRect(killButton.x, killButton.y, 55, 55);
+					}
+					else{
+						killButton.shapeCmd = killButton.shape.graphics.clear().beginFill(onColor).drawRect(killButton.x, killButton.y, 55, 55);
+					}
+				}
+				else{
+					select = track(mouseX, mouseY);
+					if (tone != null && !editMode){
+						toneMatrices[select[2]].toneBoxClick(select[0], select[1], select[2] ,e);
+					}
+					else if (tone != null && editMode){
+						toneMatrices[select[2]].editModeClick(select[0], select[1], select[2],e);
+					}	
+				}
+			}
+			
+			function track(mouseX, mouseY){
+				var selection = [];
+				var grid = [];
+				var tone;
+				for (var i = 0; i < toneMatrices.length; i++){
+					var horiz = toneMatrices[i].main.starting_pos_horiz;
+					var vert = toneMatrices[i].main.starting_pos_vert;
+					var nSize = toneMatrices[i].main.node_size;
+					var nSpace = toneMatrices[i].main.node_spacing;
+					var width = toneMatrices[i].main.dimensions[0];
+					var height = toneMatrices[i].main.dimensions[1];
+					var ssLength = toneMatrices[i].saveStateButton.saveStates.length;
+					if (ssLength != 0){
+						ssLength = parseInt(ssLength/4 + 1);
+					}
+					grid[0] = [horiz - nSize*2,vert - nSize*2]; //leftTop
+					grid[1] = [horiz - nSize, vert + ((nSize + nSpace)*height)+ (nSize*ssLength)]; //leftBottom
+					grid[2] = [horiz + ((nSize + nSpace)*width + nSize), vert + (nSize + nSpace)*height + (nSize*ssLength)];//rightBottom
+					grid[3] = [horiz + ((nSize + nSpace)*width + nSize), vert - nSize];//rightTop
+					//calculate square collision
+					if ((mouseX > grid[0][0] && mouseY > grid[0][1]) && 
+						(mouseX > grid[1][0] && mouseY < grid[1][1]) && 
+						(mouseX < grid[2][0] && mouseY < grid[2][1]) && 
+					    	(mouseX < grid[3][0] && mouseY > grid[3][1])){
+						tone = toneMatrices[i].getTone(mouseX, mouseY);//get tone
+						var j = Math.ceil((mouseY - toneMatrices[i].main.starting_pos_vert) / toneMatrices[i].main.node_size);
+						var matrixNumber = i; 
+						selection.push(tone);//select[0]
+						selection.push(j);//select[1]
+						selection.push(matrixNumber);//select[2]
+					}
+				}
+				return selection;
+			}
+			
+			function mouseUp(e){
+				mousedown = false;
+				for (var i = 0; i < toneMatrices.length; i++){
+					if (toneMatrices[i].main.drag){
+						toneMatrices[i].main.drag = false;
+						refreshText(i);
+					}
+				}
+				if (dragInterval != 0){
+					clearInterval(dragInterval);
+					dragInterval = 0;
+				}
+			}	
+			
+			function updateMouse(e){
+				mouseX = (event.clientX + document.body.scrollLeft);
+				mouseY = (event.clientY + document.body.scrollTop);
+			} 
+			
+		/*	function checkCursor(){
+				var select = [];
+				var match = false;
+				select = track(mouseX, mouseY);
+				if (helpButton.help){
+					console.log(select[0]);
+					helpText(select[0], select[2]);
+				}
+				/*
+				if ((!select[0].rollover) && (select[0] != null) && (toneAnimation[0] != select[0])){
+					toneAnimation.push(select[0]);
+					console.log(toneAnimation);
+				}
+				if (select[0].geometry == "square" && !select[0].rollover){
+					select[0].rollover = true;
+					select[0].enlargeSquare(select[0]);
+				}
+				else if (select[0].geometry == "circle" && !select[0].rollover){
+					select[0].rollover = true;
+					select[0].enlargeCircle(select[0]);
+				}
+			 	if (toneAnimation[toneAnimation.length - 1].geometry == "square"  && !match && toneAnimation[toneAnimation.length-1].rollover){
+					toneAnimation[toneAnimation.length - 1].rollrover = false;
+					toneAnimation[toneAnimation.length - 1].shrinkSquare(toneAnimation[toneAnimation.length - 1]);
+					toneAnimation.pop(toneAnimation[toneAnimation.length - 1]); 
+				}
+				else if (toneAnimation[toneAnimation.length - 1].geometry == "circle" && !match  && toneAnimation[toneAnimation.length-1].rollover){
+					toneAnimation[toneAnimation.length - 1].rollover = false;
+					toneAnimation[toneAnimation.length - 1].shrinkCircle(toneAnimation[toneAnimation.length - 1]);
+					toneAnimation.pop(toneAnimation[toneAnimation.length - 1]); 
+				}
+				
+			}*/
+		
+			function changeEditMode(e){
+				if (e.keyCode == 13){
+					editMode = !editMode;
+					backgroundColor();
+				}
+			}
+			
+			function createInterval(f, dynamicParameter, interval){
+				dragInterval = setInterval(function() {f(dynamicParameter);}, interval);
+			}
+			
+			function transpose(tonematrix){
+				if (mousedown){
+					tonematrix.main.shapeCmd.x = mouseX;
+					tonematrix.main.shapeCmd.y = mouseY;
+					var deltaX = tonematrix.main.shapeCmd.x - tonematrix.main.x;
+					var deltaY = tonematrix.main.shapeCmd.y - tonematrix.main.y;
+					//starting pos
+					tonematrix.main.starting_pos_horiz += deltaX;
+					tonematrix.main.starting_pos_vert += deltaY;
+					tonematrix.main.x += deltaX;
+					tonematrix.main.y += deltaY;
+					//loop for tones
+					for (var i = 0; i < tonematrix.tones.length; i++){
+						tonematrix.tones[i].shapeCmd.x += deltaX;
+						tonematrix.tones[i].shapeCmd.y += deltaY;
+						tonematrix.tones[i].x += deltaX;
+						tonematrix.tones[i].y += deltaY;
+					}
+					//SaveStateButton
+					tonematrix.saveStateButton.shapeCmd.x += deltaX;
+					tonematrix.saveStateButton.shapeCmd.y += deltaY;
+					tonematrix.saveStateButton.x += deltaX;
+					tonematrix.saveStateButton.y += deltaY;
+					//SaveStates
+					for (var i = 0; i < tonematrix.saveStateButton.saveStates.length; i++){
+						tonematrix.saveStateButton.saveStates[i].shapeCmd.x += deltaX;
+						tonematrix.saveStateButton.saveStates[i].shapeCmd.y += deltaY;
+						tonematrix.saveStateButton.saveStates[i].x += deltaX;
+						tonematrix.saveStateButton.saveStates[i].y += deltaY;
+					}
+					//PlayButton
+					tonematrix.playButton.shapeCmd.x += deltaX;
+					tonematrix.playButton.shapeCmd.y += deltaY;
+					tonematrix.playButton.x += deltaX;
+					tonematrix.playButton.y += deltaY;
+					//MuteButton
+					tonematrix.muteButton.shapeCmd.x += deltaX;
+					tonematrix.muteButton.shapeCmd.y += deltaY;
+					tonematrix.muteButton.x += deltaX;
+					tonematrix.muteButton.y += deltaY;
+					//set main x and y to current position
+					tonematrix.main.x = mouseX;
+					tonematrix.main.y = mouseY;
+					}
+				}
+
+			function backgroundColor(){
+				if(editMode){
+				canvas.style.backgroundColor = "B695C0";
+				edit = new createjs.Text("EDIT MODE", "100px Impact", "#FFFFFF");
+				edit.x = 2300;
+				edit.y = 50;
+				edit.textBaseLine = "alphabetic";
+				stage.addChild(edit);
+				}
+				else{
+				canvas.style.backgroundColor = "F0FFFF";
+				stage.removeChild(edit);
+				}
+			}
+//=========================================================================================================================================================
+//ASSETS
+//==========================================================================================================================================================
+			var Asset = {
+				create: function(values){
+  					var instance = Object.create(this);
+  					Object.keys(values).forEach(function(key) {
+    				instance[key] = values[key];
+  				});
+  				return instance;
+				},
+				createShape : function(Main, geometry, shape, i, j, position){
+					var shapeCmd; //create overlay for the Shape Object
+					if (geometry == "square"){
+						console.log("shapeCMD");
+						toneX = Main.starting_pos_horiz + i * (Main.node_size + Main.node_spacing);
+						toneY = Main.starting_pos_vert + j * (Main.node_size + Main.node_spacing);	
+						shapeCmd = shape.graphics.beginFill(offColor).drawRect(toneX,toneY,Main.node_size,Main.node_size).command
+					}
+					else if (geometry == "play"){
+						toneX = Main.starting_pos_horiz + i * (Main.node_size + Main.node_spacing);
+						toneY = Main.starting_pos_vert + j * (Main.node_size + Main.node_spacing);	
+						shapeCmd = shape.graphics.beginFill(onColor).drawRect(toneX,toneY,Main.node_size,Main.node_size).command	
+					}
+					else if (geometry == "circle"){
+						var radius = (Main.node_size + Main.node_spacing)/2;
+						var posX = (Main.starting_pos_horiz) + ((i + 1) * (Main.node_spacing + Main.node_size)) - radius;
+						var posY = (Main.starting_pos_vert + ((j + 1)) * (Main.node_spacing + Main.node_size)) - radius;
+						var radius = (Main.node_size + Main.node_spacing)/2;
+						shapeCmd = shape.graphics.beginFill(offColor).drawCircle(posX, posY, radius).command;
+					}
+					else if (geometry == "saveState"){	
+						var radius = (Main.node_size + Main.node_spacing)/2;
+						//var posX = Main.starting_pos_horiz + ((position%(Main.dimensions[0]/2))*2) * (Main.node_size + Main.node_spacing) - radius;
+						//var posY = Main.starting_pos_vert + Math.floor((Main.dimensions[1] + position/(Main.dimensions[0]/2))) * (Main.node_size + Main.node_spacing) - radius;
+						var posX = (Main.starting_pos_horiz) + ((i + 1) * (Main.node_spacing + Main.node_size)) - radius;
+						var posY = (Main.starting_pos_vert + ((j + 1)) * (Main.node_spacing + Main.node_size)) - radius;
+						shapeCmd = shape.graphics.beginFill(colors[i % colors.length]).drawCircle(posX, posY, radius).command;
+					}
+					else if (geometry == "help"){
+						toneX = i;
+						toneY = j;
+						if (toneX == 50 && toneY == 50){
+							shapeCmd = shape.graphics.beginFill(offColor).drawRect(toneX, toneY, 55, 55);
+						}
+						else{
+
+							shapeCmd = shape.graphics.beginFill(onColor).drawRect(toneX, toneY, 55, 55);
+						}
+					}	
+				return shapeCmd;
+				},
+				
+				createDrag : function(sPosH, sPosV, nSize, nSpace, shape){
+					var shapeCmd, posX, posY, radius;
+					var posX = sPosH + -1 * (nSize + nSpace);
+					var posY = sPosV + -1 * (nSize + nSpace);
+					var radius = (nSize + nSpace)/4;
+					shapeCmd = shape.graphics.beginFill(offColor).drawCircle(posX, posY, radius).command;
+					return shapeCmd;
+				},
+
+				animate : function(tone){
+					var xPos = this.shapeCmd.x;
+					var yPos = this.shapeCmd.y;
+					var width = this.shapeCmd.w/2 - 5;
+					var time = 600;
+					this.animating = true;
+
+					createjs.Tween.get(this.shapeCmd)
+						.to({x: (xPos + this.shapeCmd.w/3 + 3)}, time , createjs.Ease.quadInOut)
+						.to({x: (xPos)}, time, createjs.Ease.quadInOut);
+
+					createjs.Tween.get(this.shapeCmd)
+						.to({y: (yPos + this.shapeCmd.h/3 + 3)}, time, createjs.Ease.quadInOut)
+						.to({y: (yPos)}, time, createjs.Ease.quadInOut);
+					
+					createjs.Tween.get(this.shapeCmd)
+						.to({w:10}, time, createjs.Ease.quadInOut)
+						.to({w:55}, time, createjs.Ease.quadInOut);
+
+					createjs.Tween.get(this.shapeCmd)
+						.to({h:10}, time, createjs.Ease.quadInOut)
+						.to({h:55}, time, createjs.Ease.quadInOut)
+						.call(tone.animatingComplete, [tone, tone.animatingComplete]);
+
+				},
+				
+				animateClick : function(tone){
+				var xPos = this.shapeCmd.x;
+				var yPos = this.shapeCmd.y;
+				var time = 600;
+				this.animating = true;
+				createjs.Tween.get(this.shapeCmd)
+					.to({x: (xPos + this.shapeCmd.w/3 + 3)}, time , createjs.Ease.quadInOut)
+					.to({x: (xPos)}, time, createjs.Ease.quadInOut);
+
+				createjs.Tween.get(this.shapeCmd)
+					.to({y: (yPos + this.shapeCmd.h/3 + 3)}, time, createjs.Ease.quadInOut)
+					.to({y: (yPos)}, time, createjs.Ease.quadInOut);
+					
+				createjs.Tween.get(this.shapeCmd)
+					.to({w:10}, time, createjs.Ease.quadInOut)
+					.to({w:55}, time, createjs.Ease.quadInOut);
+
+				createjs.Tween.get(this.shapeCmd)
+					.to({h:10}, time, createjs.Ease.quadInOut)
+					.to({h:55}, time, createjs.Ease.quadInOut)
+					.call(tone.animatingComplete, [tone, tone.animatingComplete]);
+
+				},
+
+				animateCircle : function(tone){
+					var xPos = this.shapeCmd.x;
+					var yPos = this.shapeCmd.y;
+					var radius = this.shapeCmd.radius;
+					var time = 300;
+					this.animating = true;
+
+					createjs.Tween.get(this.shapeCmd)
+					.to({radius : (this.radius - this.radius + 5)}, time)
+					.to({radius : this.radius}, time)
+					.call(tone.animatingComplete, [tone, tone.animatingComplete]);
+				},
+
+			/*	enlargeSquare : function(tone){
+					var xPos = this.shapeCmd.x;
+					var YPos = this.shapeCmd.y;
+					var time = 600;
+						createjs.Tween.get(this.shapeCmd)
+							.to({w:85}, time, createjs.Ease.quadInOut)
+						createjs.Tween.get(this.shapeCmd)
+							.to({h:85}, time, createjs.Ease.quadInOut)
+					
+				},
+				
+				shrinkSquare : function(tone){
+					var xPos = this.shapeCmd.x;
+					var yPos = this.shapeCmd.y;
+					var time = 600;
+						createjs.Tween.get(this.shapeCmd)
+							.to({w:55}, time, createjs.Ease.quadOutIn)
+						createjs.Tween.get(this.shapeCmd)
+							.to({h:55}, time, createjs.Ease.quadOutIn)
+				},
+				
+				enlargeCircle : function(tone){
+					var xPos = this.shapeCmd.x;
+					var yPos = this.shapeCmd.y;
+					var radius = this.shapeCmd.radius;
+					var radi = tone.radius;
+					var time = 300;
+					if (radius <= radi){
+						createjs.Tween.get(this.shapeCmd)
+							.to({radius : (radius + 10)}, time)
+					}
+				},
+				
+				shrinkCircle : function(tone){
+					var xPos = this.shapeCmd.x;
+					var yPos = this.shapeCmd.y;
+					var radius = this.shapeCmd.radius;
+					var radi = tone.radius;
+					var time = 300;
+					if (radius >= radi){
+						createjs.Tween.get(this.shapeCmd)
+							.to({radius : (radius - 10)}, time)
+					}
+				},*/
+
+				animatingComplete : function(tone){
+                                 	tone.animating = false;
+                        	},
+			}
+//=======================================================================================================================================================
+//MATRIX CLICK CONTROLLER
+//======================================================================================================================================================
+		var ToneMatrix = {
+				create: function(values) {
+  					var instance = Object.create(this);
+  					Object.keys(values).forEach(function(key) {
+    				instance[key] = values[key];
+  				});
+  				return instance;
+				},
+				
+			/*	clicked : function(tone, mouseX, mouseY){
+				return ((mouseX> tone.x) && (mouseX < tone.x + tone.width) && (mouseY > tone.y) && (mouseY < tone.y + tone.height));
+				},*/
+
+			 	toneBoxClick : function(tone, j, matrixNumber,e){
+					if (tone.saveState != null){
+						if (tone.saveStates.length > 0){
+							for(var i = 0; i < tone.saveStates.length; i++){
+								tone.saveStates[i].current = false;
+								this.changeSSColor(tone.saveStates[i], tone.saveStates[i].current, i);
+							}
+						}
+                                        	tone.saveStates.push(createSaveState(this.main, this.tones, tone.position, tone.offset, "saveState"));
+						createText(matrixNumber, tone.position);
+                                        	tone.animateCircle(tone);
+                                             	tone.position++;
+                                        	/*if (tone.position % (Main.dimensions[0]/2) == 0){ 
+                                        		if(tone.offset == 4){
+                                                		tone.offset--;
+                                                	}
+                                                	else{
+                                                		tone.offset++;
+                                                	}       
+                                       		}*/
+                                        }
+					else if (tone.drag != null){
+						mousedown = true;
+						this.main.drag = true;
+						this.removeText();
+						createInterval(transpose,this,1);
+					}
+					else if (tone.edit != null){
+						for (var i = 0; i < this.saveStateButton.saveStates.length; i++){
+							this.saveStateButton.saveStates[i].current = false;
+							this.changeSSColor(this.saveStateButton.saveStates[i], this.saveStateButton.saveStates[i].current,i);
+						}
+						tone.current = true;
+						this.changeSSColor(tone,tone.current,tone.position);
+						for (var i = 0; i < tone.states.length;i++){
+							this.tones[i].ignition = tone.states[i];
+							this.changeColor(this.tones[i],this.tones[i].ignition, toneColors[matrixNumber % toneColors.length], tone.geometry);
+						}
+						
+						if ((tone.iterations < 9) && (e.which == 3)){
+							tone.iterations++;
+							this.addRemoveText();
+						}
+						else if (tone.iterations > 0 && (e.which==2)){
+							tone.iterations--;
+							this.addRemoveText();
+						}
+						tone.animateCircle(tone);
+					}
+			 		else if (tone.mute != null){
+			 			tone.mute = !tone.mute;
+						this.changeColor(tone, tone.mute, onColor, tone.geometry);
+						tone.animate(tone);
+			 		}
+			 		else if (tone.play != null){
+			 			tone.play = !tone.play;
+						this.changeColor(tone, tone.play, onColor, tone.geometry);
+						tone.animate(tone);
+			 		}
+			 		else if (tone.ignition != null){
+						tone.ignition = !tone.ignition;
+						console.log("MATRIX NUMBER = " + matrixNumber);
+						this.changeColor(tone, tone.ignition, toneColors[matrixNumber % (toneColors.length)], tone.geometry);
+						if (!tone.animating){
+							tone.animate(tone);                                                 		
+						}
+
+					}
+				},
+
+				editModeClick : function(tone, j, matrixNumber,e){
+					if (tone.saveState != null){
+						for (var i = 0; i < tone.saveStates.length; i++){
+							if (tone.saveStates[i].current){
+								this.editState(tone.saveStates[i]);
+							}
+						}
+						tone.animateCircle(tone);
+					}
+
+					else if (tone.drag != null){
+						mousedown = true;
+						this.main.drag = true;
+						this.removeText();
+						createInterval(transpose,this,1);
+					}
+					
+					else if (tone.edit != null){
+						if(e.which == 1){	
+							for (var i = 0; i < this.saveStateButton.saveStates.length; i++){
+								this.saveStateButton.saveStates[i].current = false;
+								this.changeSSColor(this.saveStateButton.saveStates[i], this.saveStateButton.saveStates[i].current,i);
+							}
+							tone.current = true;
+							this.changeSSColor(tone,tone.current,tone.position);
+							for (var i = 0; i < tone.states.length;i++){
+								this.tones[i].ignition = tone.states[i];
+								this.changeColor(this.tones[i],this.tones[i].ignition, toneColors[matrixNumber % (toneColors.length)], tone.geometry);
+							}
+						}
+						else if ((tone.iterations < 9) && (e.which == 3)){
+							tone.iterations++;
+							this.addRemoveText();
+						}
+						else if (tone.iterations > 0 && (e.which==2)){
+							tone.iterations--;
+							this.addRemoveText();
+						}
+						tone.animateCircle(tone);
+					}
+					
+			 		else if (tone.mute != null){
+			 			tone.mute = !tone.mute;
+						this.changeColor(tone, tone.mute, onColor, tone.geometry);
+			 		}
+
+			 		else if (tone.play != null){
+			 			tone.play = !tone.play;
+						this.changeColor(tone, tone.play, onColor, tone.geometry);
+						if (tone.play == false){
+							this.reset();
+						}
+			 		}
+
+			 		else if (tone.ignition != null){
+						 tone.ignition = !tone.ignition;
+						 var current;
+						 for (var i = 0; i < this.saveStateButton.saveStates.length; i++){
+							if (this.saveStateButton.saveStates[i].current){
+								current = this.saveStateButton.saveStates[i];
+							}
+						 }
+						 this.changeColor(tone, tone.ignition, toneColors[matrixNumber % (toneColors.length)], tone.geometry);
+						 this.editState(current);
+						 if (!tone.animating){
+							tone.animate(tone);
+						 }
+					}                                                 		
+				},
+
+				getTone : function(mouseX, mouseY){
+					var tone;
+					var x = mouseX;
+					var y = mouseY;
+						
+					//is it saveStateButton
+					for (var i = 0; i < this.saveStateButton.saveStates.length;i++){
+						var arr = this.saveStateButton.saveStates[i];
+						if (x > arr.shapeCmd.x && x < (arr.shapeCmd.x + this.main.node_size) &&
+						    y > arr.shapeCmd.y && y < (arr.shapeCmd.y + this.main.node_size)){
+							tone = arr;
+						}
+					}
+					if (x > this.main.shapeCmd.x && x < (this.main.shapeCmd.x + this.main.node_size) &&
+					    y > this.main.shapeCmd.y && y < (this.main.shapeCmd.y + this.main.node_size)){
+						tone = this.main;
+					}
+					else if (x > this.saveStateButton.shapeCmd.x && x < (this.saveStateButton.shapeCmd.x + this.main.node_size) &&
+					    y > this.saveStateButton.shapeCmd.y && y < (this.saveStateButton.shapeCmd.y + this.main.node_size)){
+						tone = this.saveStateButton;
+					}
+					//is it Mute?
+					else if ((x > this.muteButton.shapeCmd.x && x < (this.muteButton.shapeCmd.x + this.main.node_size) &&
+						  y > this.muteButton.shapeCmd.y && y < (this.muteButton.shapeCmd.y + this.main.node_size))){
+						tone = this.muteButton;
+					}
+					//is it play?	
+					else if ((x > this.playButton.shapeCmd.x && x < (this.playButton.shapeCmd.x + this.main.node_size) &&
+						  y > this.playButton.shapeCmd.y && y < (this.playButton.shapeCmd.y + this.main.node_size))){
+						tone = this.playButton;
+					}
+					//otherwise it is a tone;
+					else if ((x > this.main.starting_pos_horiz && x < (this.main.starting_pos_horiz + (this.main.node_size + this.main.node_spacing) * this.main.dimensions[0]) &&
+						  y > this.main.starting_pos_vert && y < (this.main.starting_pos_vert + (this.main.node_size + this.main.node_spacing) * this.main.dimensions[1]))){ 
+						var offSet = Math.floor(((mouseX - this.main.starting_pos_horiz - 10) / this.main.node_size));
+						x = Math.floor((((mouseX - this.main.starting_pos_horiz - (10 + offSet)) / this.main.node_size)));
+						offSet = Math.floor(((mouseY - this.main.starting_pos_vert - 10) / this.main.node_size));
+						y = Math.floor((((mouseY - this.main.starting_pos_vert - (10 + offSet)) / this.main.node_size)));
+						tone = this.tones[x * this.main.dimensions[1] + y]
+					}
+					return tone;
+				},
+
+				changeColor : function(tone, bool, color, geometry){
+					if (bool){
+						tone.shapeCmd = tone.shape.graphics.clear().beginFill(color).drawRect(tone.x,tone.y,this.main.node_size,this.main.node_size).command;
+					}
+					else{
+						tone.shapeCmd = tone.shape.graphics.clear().beginFill(offColor).drawRect(tone.x,tone.y,this.main.node_size,this.main.node_size).command;
+					}
+				},
+				
+				changeSSColor : function(tone, current, position){
+					if(current){
+						tone.shapeCmd = tone.shape.graphics.clear().beginFill(colors[position % colors.length]).drawCircle(tone.x+56,tone.y+56,tone.radius).command;
+					}
+					else{
+						tone.shapeCmd = tone.shape.graphics.clear().beginFill(offColor).drawCircle(tone.x+56,tone.y+56,tone.radius).command;
+					}	
+				},
+
+				editState : function(state){
+					for (var i = 0; i < state.states.length; i++){
+						state.states[i] =  this.tones[i].ignition;
+					}
+				},
+
+				changeState : function(saveState){
+					console.log("saveStates");
+					for (var i = 0; i < saveState.states.length; i++){
+						this.tones[i].ignition = saveState.states[i];
+						this.changeColor(this.tones[i],this.tones[i].ignition,toneColors[this.main.matrixId % toneColors.length], this.tones[i].geometry);
+					} 
+				},
+				
+				current :  function(){
+					var changed = false;
+					for(var i = 0; i < this.saveStateButton.saveStates.length; i++){
+						if(this.saveStateButton.saveStates[i].current && !changed){
+							changed = true;
+							this.saveStateButton.saveStates[i].current = false;
+							this.changeSSColor(this.saveStateButton.saveStates[i], this.saveStateButton.saveStates[i].current, this.saveStateButton.saveStates[i].position);
+							this.saveStateButton.saveStates[i].counter = 0;
+							this.saveStateButton.saveStates[(i+1)%this.saveStateButton.saveStates.length].current = true;
+							var pos = this.saveStateButton.saveStates[(i+1)%this.saveStateButton.saveStates.length].position;
+							this.changeSSColor(this.saveStateButton.saveStates[(i+1)%this.saveStateButton.saveStates.length], true, pos);
+							this.changeState(this.saveStateButton.saveStates[(i+1)%this.saveStateButton.saveStates.length]);	
+							}
+						}
+				},
+				
+				reset : function(){
+					for (var i = 0; i < this.saveStateButton.saveStates.length; i++){
+						this.saveStateButton.saveStates[i].current = false;
+						this.saveStateButton.saveStates[i].counter = 0;
+						this.changeSSColor(this.saveStateButton.saveStates[i], false, this.saveStateButton.saveStates[i].position);
+					}
+					this.saveStateButton.saveStates[0].current = true;
+					this.changeState(this.saveStateButton.saveStates[0]);
+					this.changeSSColor(this.saveStateButton.saveStates[0], this.saveStateButton.saveStates[0].current, this.saveStateButton.saveStates[0].position);
+				},
+
+				removeText : function(){
+					while(this.main.textInstances.length > 0){
+						var removeText = this.main.textInstances.pop();
+						stage.removeChild(removeText);
+					}
+				},
+				addRemoveText : function(){
+					this.removeText();
+					refreshText(this.main.matrixId);		
+				},
+
+				beats : function(){
+					if (this.playButton.play){
+						for(var j = 0; j < this.main.dimensions[1]; j++){
+							tone = this.tones[(k%this.main.dimensions[0])*this.main.dimensions[1] + j];
+								if(tone.ignition && !this.muteButton.mute){
+									var instance = createjs.Sound.play(tone.sound);
+									if (this.main.matrixId == 0){
+										instance.volume = 0.1;
+									}
+									else if (this.main.matrixId == 2){
+										instance.volume = 0.7;
+									}
+									else{
+										instance.volume = 0.5;
+									}
+									instance.play();
+								}
+								if (!tone.animating && tone.ignition){
+									tone.animate(tone);
+								}
+							}
+						}
+					}
+				};
+//============================================================================================================================================================
+//Matrix FABRICATOR Instructions;
+//=============================================================================================================================================================
+			function main(sPosH, sPosV, dimensions, counter, node_size, node_spacing, milliSeconds, dbpm, id, soundId){
+				var shape = new createjs.Shape();
+				stage.addChild(shape);
+				var posX = sPosH + -1 * (node_size + node_spacing);
+				var posY = sPosV + -1 * (node_size + node_spacing);
+				return Asset.create({starting_pos_horiz : sPosH,
+									starting_pos_vert : sPosV,
+									matrixId : id,
+									sounds : soundId,
+									x : posX,
+									y : posY,
+									textInstances : [],
+									dimensions : dimensions,
+									counter : counter,
+									node_size : node_size,
+									node_spacing : node_spacing,
+									shapeCmd : Asset.createDrag(sPosH, sPosV, node_size, node_spacing, shape),
+									drag : false,
+									changed : false,
+								        milliSeconds : milliSeconds,
+									dbpm : dbpm,
+									bpm : milliSeconds/dbpm})
+			}
+
+			function createTones(Main, geometry){
+					tonesArray = [];//create Arrack for Objects
+					for (var i = 0; i < Main.dimensions[0]; i++){//Columns of Matrix
+						for (var j = 0; j < Main.dimensions[1]; j++){//Rows of Matrix
+							var shape = new createjs.Shape();//Create Shape
+							stage.addChild(shape);
+							var Tone = Asset.create({geometry : "square",
+										 shape : shape,
+										 x : Main.starting_pos_horiz + i * (Main.node_size + Main.node_spacing), 
+										 y : Main.starting_pos_vert + j * (Main.node_size + Main.node_spacing),
+										 shapeCmd : Asset.createShape(Main,geometry, shape, i, j),
+										 ignition  : false,
+										 animating : false,
+										 changed : false,
+										 rollover : false,
+										 sound : Main.sounds[j % Main.sounds.length]});
+							tonesArray.push(Tone);
+						}
+					}	
+					return tonesArray;
+				}
+
+			function CreateSaveStateButton(Main, geometry){
+					var shape = new createjs.Shape();//Create Shape
+					stage.addChild(shape);
+					var radi = (Main.node_size + Main.node_spacing)/2;
+					var saveStateButton = Asset.create({radius : radi,
+									    shape : shape,
+									    x : Main.starting_pos_horiz + (Main.dimensions[0] + 1) * (Main.node_size + Main.node_spacing) - radi,
+									    y : Main.starting_pos_vert + (Main.node_size + Main.node_spacing) - radi,
+									    position : 0,
+									    offset : 2,
+									    saveStates : [],
+									    saveState : false,
+									    geometry : "circle",
+									    rollover : false,
+									    shapeCmd : Asset.createShape(Main, geometry, shape, Main.dimensions[0], 0),
+									    animating : false});
+					return saveStateButton;
+				}
+
+			function createSaveState(Main, Tones, position, offset, geometry){
+					var shape = new createjs.Shape();//Create Shape
+					stage.addChild(shape);
+					stateArray = [];
+					var radi = (Main.node_size + Main.node_spacing)/2;
+					for (var i = 0; i < Main.dimensions[0]*Main.dimensions[1]; i++){
+						tempIgnite = Tones[i].ignition;
+						stateArray.push(tempIgnite);
+					}
+					var z = position%(Main.dimensions[0]/2);
+						if (z == 1){
+							z++;
+						}
+						else if (z == 2){
+							z+=2;
+						}
+						else if (z == 3){
+							z+=3;
+						}
+					var w = Math.floor(Main.dimensions[1] + (position/(Main.dimensions[0]/2)));
+					var xPos = Main.starting_pos_horiz + ((position%(Main.dimensions[0]/2))*2) * (Main.node_size + Main.node_spacing) - radi;
+					var yPos = Main.starting_pos_vert + Math.floor((Main.dimensions[1] + position/(Main.dimensions[0]/2))) * (Main.node_size + Main.node_spacing) - radi;
+					var saveState = Asset.create({radius : radi,
+								      geometry : "circle",
+								      position : position,
+								      x : xPos,
+								      y : yPos,
+								      shape : shape,
+								      shapeCmd : Main.createShape(Main, geometry, shape, z, w, position),
+								      animating : false,
+								      edit : false,
+								      active : true,
+								      iterations : 0,
+								      counter : 0,						
+								      current : true,
+								      rollover : false,
+								      states : stateArray})
+					return saveState;
+				}
+
+			function createPlayButton(Main, geometry){
+					var shapePlay = new createjs.Shape();//Create Play shapes
+					stage.addChild(shapePlay);//add child to stage
+					var Play = Asset.create({width : Main.node_size,
+								 height : Main.node_size,
+								 x : Main.starting_pos_horiz,
+								 y : Main.starting_pos_vert + (-1 * (Main.node_size + Main.node_spacing)),
+								 shape : shapePlay,
+								 geometry : "square",
+								 shapeCmd : Asset.createShape(Main, geometry, shapePlay, 0, -1),//0 and -1 are positions on the matrix
+								 play : true,
+								 rollover : false,
+								 animating : false});//Create Play Button
+					return Play;//point MASTER TONE to play button
+				}
+
+			function createMuteButton(Main, geometry){
+					var shapeMute = new createjs.Shape();//Create Mute Shape
+					stage.addChild(shapeMute);//add child to stage
+					var Mute = Asset.create({width : Main.node_size,
+								 height : Main.node_size,
+								 shape : shapeMute,
+								 x : Main.starting_pos_horiz + 2 * (Main.node_size + Main.node_spacing),
+								 y : Main.starting_pos_vert + -1 * (Main.node_size + Main.node_spacing),
+								 geometry : "square",
+								 rollover : false,
+								 shapeCmd : Asset.createShape(Main, geometry , shapeMute, 2, -1),
+								 mute : false});//Create Mute Button
+					return Mute;
+			}
+			
+			function createText(matrixNumber, position){
+				text = new createjs.Text(numbers[toneMatrices[matrixNumber].saveStateButton.saveStates[position].iterations], "40px Calibri", "#FFFFFF");
+				text.x = toneMatrices[matrixNumber].saveStateButton.saveStates[position].x + 46;
+				text.y = toneMatrices[matrixNumber].saveStateButton.saveStates[position].y + 35;
+				text.textBaseLine = "alphabetic";
+				stage.addChild(text);
+				toneMatrices[matrixNumber].main.textInstances.push(text);
+			}
+			
+			function createHelp(Main, geometry, toggle){
+				var shapeHelp = new createjs.Shape();
+				stage.addChild(shapeHelp);
+				xPos = 50;
+				yPos = 50;
+				var Help = Asset.create({width : 55,
+							height : 55,
+							shape : shapeHelp,
+							x : xPos,
+							y : yPos,
+							geometry : "square",
+							rollover : false,
+							shapeCmd : Asset.createShape(Main, geometry, shapeHelp, xPos, yPos),
+							help : toggle})
+				return Help;
+			}
+	
+			function createKill(Main, geometry){
+				var shapeKill = new createjs.Shape();
+				stage.addChild(shapeKill);
+				var xPos = 150;
+				var yPos = 50;
+				var Kill = Asset.create({width : 55,
+							height : 55,
+							shape : shapeKill,
+							x : xPos,
+							y : yPos,
+							geometry : "square",
+							shapeCmd : Asset.createShape(Main, "help", shapeKill, xPos, yPos),
+							play : true})
+				return Kill;
+			}
+
+			function refreshText(matrixNumber){
+				for (var position = 0; position < toneMatrices[matrixNumber].saveStateButton.saveStates.length; position++){
+					text = new createjs.Text(numbers[toneMatrices[matrixNumber].saveStateButton.saveStates[position].iterations], "40px Calibri", "#FFFFFF");
+					text.x = toneMatrices[matrixNumber].saveStateButton.saveStates[position].x + 46;
+					text.y = toneMatrices[matrixNumber].saveStateButton.saveStates[position].y + 35;
+					text.textBaseLine = "alphabetic";
+					stage.addChild(text);
+					toneMatrices[matrixNumber].main.textInstances.push(text);
+				}
+			}
+			
+//====================================================================================================================================================================================
+//Creation itself
+//====================================================================================================================================================================================
+			//Main (startingPosH, startingPosV, Dimensions, counter, nodeSize, nodeSpacing, milli, dbpm)
+			function createMatrix(dimensions){
+				Main = main(canvas.width/2,canvas.height/2,dimensions,0,55,1, 60000, 200);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})	
+				toneMatrices.push(Label);
+				textInstances.push([]);
+			}
+		
+			function helpMatrix(){
+				deleteMatrix();
+				Main = main(canvas.width/2-500,canvas.height/2-400,[8,8],0,55,1, 60000, 200,0, soundLead);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				labelHelp = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(labelHelp);
+				
+				helpButton = createHelp(Main, "help", true);
+				helpText(0);
+			}
+			function deleteMatrix(){
+				if (toneMatrices.length > 0){
+					var length = toneMatrices.length;
+					for (var i = 0; i < length; i++){
+						var remove =  toneMatrices.pop();
+						console.log(remove);
+						for (var attribute in remove){
+							delete attribute;
+						}
+						delete remove;
+					}
+				}
+				stage.removeAllChildren();
+				stage.update();
+			}
+
+			function playMatrix(){
+				deleteMatrix();				
+
+				Main = main(200,200,[8,8],0,55,1, 60000, 200,0, soundLead);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label);
+			
+				Main = main(800,200,[8,8],0,55,1, 60000, 200,1, soundMallet);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_two = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_two);
+			
+				Main = main(1400,200,[8,8],0,55,1,60000,200,2,soundPad);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_three = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_three);
+				
+				Main = main(2000,200,[8,8],0,55,1, 60000, 200,3, soundChimes);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label);
+			
+				Main = main(200,800,[8,8],0,55,1, 60000, 200,4, soundDrums);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_two = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_two);
+			
+				Main = main(800,800,[8,8],0,55,1,60000,200,5,soundVoice);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_three = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_three);
+				
+				Main = main(1400,800,[8,8],0,55,1, 60000, 200,6, soundFlange);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label);
+			
+				Main = main(2000,800,[8,8],0,55,1, 60000, 200,7, soundMinorToMajor);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_two = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_two);
+			
+				Main = main(200,1400,[8,8],0,55,1,60000,200,8,soundPureVibes);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_three = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_three);
+				
+				Main = main(800,1400,[8,8],0,55,1, 60000, 200,9, soundSilkHorns);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label);
+			
+				Main = main(1400,1400,[8,8],0,55,1, 60000, 200,10, soundSogawni);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_two = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_two);
+			
+				Main = main(2000,1400,[8,3],0,55,1,60000,200,11,soundDrums2);
+				Tones = createTones(Main, "square");
+				SaveStateButton = CreateSaveStateButton(Main, "circle");
+				MuteButton = createMuteButton(Main, "square");
+				PlayButton = createPlayButton(Main, "play");
+				Label_three = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+				toneMatrices.push(Label_three);
+				helpButton = createHelp(Main, "help", false);
+				killButton = createKill(Main, "square");
+				
+				var HText = new createjs.Text("Help", "20px Arial", "#000000");
+				HText.x = helpButton.x;
+				HText.y = helpButton.y - 40;
+				stage.addChild(HText);
+				var KText = new createjs.Text("Master Play", "20px Arial", "#000000");
+				KText.x = killButton.x - 20;
+				KText.y = killButton.y - 40;
+				stage.addChild(KText);
+			}
+	/*
+			Main = main(200,200,[8,8],0,55,1, 60000, 200,0, soundLead);
+			Tones = createTones(Main, "square");
+			SaveStateButton = CreateSaveStateButton(Main, "circle");
+			MuteButton = createMuteButton(Main, "square");
+			PlayButton = createPlayButton(Main, "play");
+			Label = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+			toneMatrices.push(Label);
+			textInstances.push([]);
+			
+			Main = main(800,200,[8,8],0,55,1, 60000, 200,1, soundMallet);
+			Tones = createTones(Main, "square");
+			SaveStateButton = CreateSaveStateButton(Main, "circle");
+			MuteButton = createMuteButton(Main, "square");
+			PlayButton = createPlayButton(Main, "play");
+			Label_two = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+			toneMatrices.push(Label_two);
+			textInstances.push([]);
+			
+			Main = main(200,800,[8,8],0,55,1,60000,200,2,soundPad);
+			Tones = createTones(Main, "square");
+			SaveStateButton = CreateSaveStateButton(Main, "circle");
+			MuteButton = createMuteButton(Main, "square");
+			PlayButton = createPlayButton(Main, "play");
+			Label_three = ToneMatrix.create({main : Main, tones : Tones, saveStateButton : SaveStateButton, muteButton : MuteButton, playButton : PlayButton})
+			toneMatrices.push(Label_three);
+			textInstances.push([]);
+	*/
+			//helpButton = createHelp(Main, "help");
+		
+		function tick(event){
+			stage.update();
+		}
+		
+		function helpText(matrixNumber){
+			//var helpButtonH = new createjs.Text|("Press this if you need help!", "20px Arial", "#000000");
+			var shape = new createjs.Shape();
+			stage.addChild(shape);
+			var Main = toneMatrices[matrixNumber].main;
+			var geometry = "square";
+			var saveStatesH = new createjs.Text("This saves the states of your sounds", "40px Calibri", "#000000");
+			saveStatesH.x = toneMatrices[matrixNumber].saveStateButton.x + 200;
+			saveStatesH.y = toneMatrices[matrixNumber].saveStateButton.y - toneMatrices[matrixNumber].saveStateButton.radius/2;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(saveStatesH.x - 170,saveStatesH.y+10,170,5).command;
+			Asset.createShape(Main, geometry, shape, 0, 0);
+			//stage.addChild(shape);
+			stage.addChild(saveStatesH);
+			var saveStateButtonsH = new createjs.Text("1) These load the states you saved.\n\n", "40px Calibri", "#000000");
+			saveStateButtonsH.x = toneMatrices[matrixNumber].tones[4].x;
+			saveStateButtonsH.y = toneMatrices[matrixNumber].tones[63].y + 275;
+			stage.addChild(saveStateButtonsH);
+			var iterationsH = new createjs.Text("2) The number displayed is the number of times it'll iterate through the matrix\n     before going on to load the next saveState.\n\t  -Right Click to Increment\n\t  -Middle Click to decrement", "40px Calibri", "#000000");
+			iterationsH.x = toneMatrices[matrixNumber].tones[4].x;
+			iterationsH.y = toneMatrices[matrixNumber].tones[63].y + 315;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(iterationsH.x-10,iterationsH.y-220,5,170).command;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(iterationsH.x+440,iterationsH.y-220,5,170).command;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(iterationsH.x-7,iterationsH.y-50,450,5).command;	
+			stage.addChild(iterationsH);
+			var muteButtonH = new createjs.Text("This is the Mute Button", "40px Arial", "#000000");
+			muteButtonH.x = toneMatrices[matrixNumber].muteButton.x - 50;
+			muteButtonH.y = toneMatrices[matrixNumber].muteButton.y - 125;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(muteButtonH.x+75,muteButtonH.y+40,5,110).command;
+			stage.addChild(muteButtonH);
+			var playButtonH = new createjs.Text("This is the Play Button!", "40px Calibri", "#000000");
+			playButtonH.x = toneMatrices[matrixNumber].playButton.x - 140;
+			playButtonH.y = toneMatrices[matrixNumber].playButton.y - 250;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(playButtonH.x+160,playButtonH.y+50,5,190).command;
+			stage.addChild(playButtonH);
+			var tonesH = new createjs.Text("These hold sounds,\n click a few and\n find out what they do!", "40px Arial", "#000000");
+			tonesH.x = toneMatrices[matrixNumber].tones[4].x - 600;
+			tonesH.y = toneMatrices[matrixNumber].tones[4].y - 100;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(tonesH.x+400,tonesH.y-135,170,5).command;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(tonesH.x+400,tonesH.y+298,170,5).command;
+			shapeCmd = shape.graphics.beginFill(offColor).drawRect(tonesH.x+400,tonesH.y-135,5,440).command;
+			stage.addChild(tonesH);
+			var editModeH = new createjs.Text("Press 'Enter' for Edit Mode \n\n Edit mode is slightly different in that\n\n 1) Notes are recorded into the current Save State in Real Time \n 2) Edit Mode doesn't take into account iterations numbers and\n       will loop a rhythm infinitely", "40px Calibri", "#000000");
+			editModeH.x = canvas.width/2 + canvas.width/4 - 300;
+			editModeH.y = canvas.height/2 - canvas.height/4 - 100;
+			stage.addChild(editModeH);
+			var HText = new createjs.Text("Help", "20px Arial", "#000000");
+			HText.x = helpButton.x;
+			HText.y = helpButton.y - 40;
+			stage.addChild(HText);
+		}
+
+		//Play_Loop OF MATRICES
+		function play_loop(){
+				if (killButton.play){
+				for (var i = 0; i < toneMatrices.length; i++){
+					toneMatrices[i].main.changed = false;
+				}
+				for (var i = 0; i < toneMatrices.length; i++){ //iterate through tone matrices
+					if (k % toneMatrices[i].main.dimensions[0] == 0 && (k != 0)){ //check if MASTER ITERATOR (k) has played all the notes
+						for (var j = 0; j < toneMatrices[i].saveStateButton.saveStates.length; j++){//iterate through save states
+							if (toneMatrices[i].saveStateButton.saveStates[j].current && !toneMatrices[i].main.changed && toneMatrices[i].playButton.play && !editMode){
+								toneMatrices[i].saveStateButton.saveStates[j].counter++;
+								if (((toneMatrices[i].saveStateButton.saveStates[j].counter) >= (toneMatrices[i].saveStateButton.saveStates[j].iterations)) && (toneMatrices[i].saveStateButton.saveStates[j].iterations != 0)){
+									toneMatrices[i].main.changed = true;
+									toneMatrices[i].current();
+								}
+							}
+						}
+					}
+				toneMatrices[i].beats();
+				}
+				k++;
+			}
+			}
+		//setInterval("checkCursor()",50);
+		playMatrix();
+		play_loop();
+		</script>
+	</head>
+	<body onload = init>
+	</body>
+</html>
