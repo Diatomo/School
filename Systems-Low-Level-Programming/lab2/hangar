@@ -1,0 +1,102 @@
+DIMENSIONS 100 100
+ITERATIONS 1000
++--------------------------------------------------------------------------------------------------+
+|    p                                                                              p              |
+|                                                z                              p            p     |
+|                   z               p                                                              |
+|          zp                                    z                       p        z                |
+|            z                                                                           p         |
+|                      z                                       p                                   |
+|                            z                                                                     |
+|     p                                                                                            |
+|            z                                                                                     |
+|                 z              p                                              p         p        |
+|                         z       p  z           z p                           z                   |
+|              z                                                            p                      |
+|           z  z          z                                                                        |
+|       p                                            z                         z            p      |
+|            z     z                             z   p                           p              p  |
+|            p                                         z          p                                |
+|  p              p          z                 z          p                 p                     p|
+|                               p                              p                                   |
+|                   p                                                      p p                     |
+|                  z      z                                         p      p              p      z |
+|                               z                z         z                      z     p p        |
+|                                                                                                z |
+|       z                     z     p                                          p p                 |
+|                                                         z                                        |
+|         p          z                                                                             |
+|         p                          p                                                             |
+|                               z      z                                                           |
+|             z                                                                                    |
+|     z                           p  p                                 p                          p|
+|                                        z           p                p                            |
+|    p p       p                                                                        z         z|
+|   p              p                                  p                                            |
+|                                                                                  p             p |
+| p                       p                                 z             p                        |
+|                                p                  z               z                              |
+|           p       p         p                                        p                    p      |
+|           z                                                                                      |
+|            z                                                                     z      p        |
+|                                                                                                  |
+|                           p                                                                      |
+|      z    z                   z p              z                                              p  |
+|            p                                      p           p z                                |
+|             p                                                                                    |
+|  p     p   p       z                p                                                            |
+|                                                                                                 z|
+|                                       p                    p                                     |
+|p p                  p                                                          z            z    |
+|                                                                                         z        |
+|    p                                               p     p                                    p  |
+|                        p                     p p                                      p z        |
+|        p                           z                                       z                     |
+|                                        p              p                                          |
+|                                                   p        z                     z  p            |
+|                  p                                                                               |
+|                  z  z                                           p                      z         |
+|                                z                                                             p   |
+|                                                                          z                       |
+|   z                                                    z                           p             |
+|  z  p                              p p                                           z   p           |
+|                                       pz                                                         |
+|                p  z                                  p       p      p                            |
+|  z                                                                     p                         |
+|                p                                      z    z p      z                   z        |
+|                   z                                                                              |
+|        p   z                                                                      z              |
+|                                                   p                                              |
+|    z        p                              z           p                                         |
+|                                             p                           p                    p   |
+|                         p    z                                               p                   |
+|                   z                                                                              |
+|                             p          p                            p                            |
+|                                   z  p                                 p                  p      |
+|                       z                                       p                                  |
+|  pzp             p       p            z                                                          |
+|                                                                       p                          |
+|  z             z                                   p                 p                p      p   |
+|              z                                           p                     p         p       |
+|                            p            z        z                                               |
+|                                                             p     z                     p        |
+|  p                                                                                               |
+|                               z              pp                                                  |
+|                                                       z               p                      z   |
+|                                           p                        p                             |
+|                                                z                     p            p              |
+|                                       z             p                                            |
+|                        z                                     p                                   |
+|    zz                                      p                                 p                   |
+|             z                                                z                 p                z|
+|                                                                            p                     |
+|            p      z                           p                                                  |
+| p         z    p                     p    p                                      p               |
+|                                                           p                           p          |
+|                       z                                                                          |
+|                                                        p    z        p                           |
+|                                               p                                    p             |
+|         p   p                 z                        p                              p          |
+|           p               p                                                           p          |
+| p                                                                                       z        |
++--------------------------------------------------------------------------------------------------+

@@ -1,0 +1,66 @@
+DIMENSIONS 64 64
+ITERATIONS 200
+----------------------------------------------------------------
+|p  pp  z       p z pp pzpp z  z   pp  zp z p zz  p pp p      zp 
+| p p  p p zp       pzp  p    p p    pp    p pp  ppz  z pz p z p 
+|   p    z z  p pp p  p p zz  ppp p zpp p   p zp  ppp p  pp    pp
+|    z   z z pp ppp  p zp   p  pp  p  p p  z p  pp pp p p  p pp  
+|p  p ppp   pz       p  p     pppp      zpp zz ppp       p ppp pp
+| p   pp p  p     z p  p p zpppppp  pppp z     pz   p    p  zp   
+|z p  z     p   zp pzpp  ppp  pp  pppp  p  p    p  pp p ppp      
+|  pp p ppp  p   ppz zp   p      p  ppz   p  z  pz   zp   p   ppp
+|     pz       zz p   p  zpzp   p      p  pz           ppp  z   p
+|   p  p         p p  p   pz p   pppppppp p       p   pp      p p
+|       z pp   pp p pp p zz zp  pp   pp  p p       p    z z p p  
+|p p  p p   pp  p pp ppp  p  p     pp  p  p p p    p pp   p  p   
+|   z p z ppz  pp  z   p  p   p p  ppzp    z z ppp  ppp pz ppp  p
+|p z  p p  p  z p pp   p  p  zpp ppp   pp p  z    p  pz pz   p  p
+|   p  p pp      pp  ppz     pzpp p   p zpp  p ppp    p   pp     
+|       ppp   p p  p p    pp   pz   p  ppp p pp      pz p  ppp pp
+|pz    ppp zp p p ppp        p p   z p p    pppp   pp    p   pp p
+| p p z   p    ppp p p   pp zppp                p pp    p p p p p
+|   ppp pp p p pp  pp  p   pzp   z pp  p  p    pp     p    p    p
+|p p pp    p p pz    p  p  z pp  p        p ppz  ppp   ppp pp   z
+|z   pp  p p      pz     pp     zp     p  p p    pp      p   pzpp
+|p   ppp ppp ppp  zp    z pp     zp pp pzp   z   zp     p p      
+|    pz pp             z  zp pz  pzzzpppp  pppppz      p p pp  p 
+|p p   p   p p    pz  z p   z   ppp      p p   p zppzpzppp pz z p
+|   p  p   p p p        pp p p  p  p   pp  z   z   p  zp p pppp p
+|   p  p pp p p   p  p  p             p pz zp p   pp zpz   p     
+|       pz p p  p   p  z p     z ppp z  pz   zpp p z ppp z   zp p
+|    p pp    p   pppz  p p       p  pz p      ppp p    pp ppp p  
+|   p      p    p    p p p  z p p p   p    zp p   p ppp  pp     p
+|p p     p    p pp  p    p  pz pp p  p   p    ppp    ppp pp     p
+|       pp    pppp       pppp p p  ppp pp p  zp  p    zppp p pp  
+|p p pp  ppzp       p  p    p p p  p pz z   zp  pp   z  p   p   p
+| zp  p  p    pp zppzz  p      pp        p p    p  zp p pp zp p p
+|   p   p  p  ppp p z  ppp   pp     pp   pzp  p    pz  ppp    z  
+|zp  zp          z   ppppp  p   ppp  pzp    z   p  z  pp      p  
+|  pp p p   pp p pz     p    p  pp ppp ppp z  ppp     z  pppp  pp
+|   pp    z zz  zpp p p  p   z p pp    p  p    p  pp  p  pp  p   
+|p    p      p pp    ppp     p  ppp p   p    p  pzp   p  pzp     
+|p       z     pppp p     pz pppp p   p  pp ppz      p p   p pp  
+| p zp    ppp    p    pp p        ppp    ppp  p     ppp z  pp  p 
+|pp       pz   pp p p p  p    pz  p     ppp pp p   pzpp p     zp 
+|  p  p p pz   p  pp p pp   z     p  z z p pp z  p z      z  p zp
+| p z p pz  p pzppp p p    pz p z  pzp p pz    pp p  p p  pp     
+| p pz z    zpp   p  pz p p   pp    pp     z  z      ppp    pp p 
+| ppp       pp  p p     p p  p   p  pzppppzp     pp  pppz    zp p
+|     p pp p  zp p   p  pp zpp    p  p z p  pp    p  p  p   p pz 
+|pp  pp  pp p p   p     zp p pzp  pp zp zz ppzp     zzp      p p 
+| z    zpzp p p p   p      z p   p  ppp p  p z   p pp pppzppp   p
+|zp  pzz   z pp p  p  p pp   p  pp  pzp   pp  p    p z p  p   p  
+|p   z    p  p       zpp  ppzp  p  p  ppp z p  pp  p   ppp pppp  
+|     zp p   p    z  z p  p z   p p p   p   ppp p    ppp      p  
+|pppppp     p   p     ppp   ppp p pp   p zp  p     ppppp    z p  
+| z pp  p  pz  z p   p       p p p    pzz  p   p pp   p     z p p
+|p  p    p    pp pp   pp  p  p z pp   p  zppp p  z  p  p      p  
+|pp ppp pzp p p     p  zz   zp    p  p   p zp   p pp    p pz    p
+|z p p p  z pp  zzpp   z p z pppp  pp pzp   zp  pp  p zp p   p   
+|p  pz p   p       p  pzpp zp      pp p zp p p   p p       zppz z
+|  z        zpp z p           p   p p    p       pppz     zppp p 
+|p     z p  ppp   p  p ppp  p pp  pppz      p   p   p   pp  pp pp
+| zpp     ppp  z p    p    pp     ppp   pp p     z  p   z  z p zp
+|   zzp        zpp   p  zppp  pp    p pp p   zp     zzpp  p     p
+|p    pz p zp      p  zpp    pp p ppzz ppppp pp  p   z pppp p    
+|p p pz zp ppz    p z   p ppp zpzp   p      p z p      pp p p  z 
