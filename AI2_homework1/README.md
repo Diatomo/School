@@ -11,3 +11,5 @@ A naive approach was implemented which basically suggest that each set of charac
   2) python3 mushroom.py
   
 If it worked correctly the output is 99.9, meaning 99.9% of the data was predicted correctly.
+
+![Alt text](https://user-images.githubusercontent.com/8934965/29058414-351d16a4-7bde-11e7-9d27-25a0ef31ded3.png)
