@@ -47,21 +47,9 @@ def main():
         kMeans = km.Kmeans(trainData, testData, i)
         kMeans.train()
         kMeans.test()
-        kMeans.results(kMeans.testData, False, True, True)
-        probabilities(kMeans)
+        #kMeans.results(kMeans.testData, False, True, True)
+        #probabilities(kMeans)
         stats(averages,stdDev,kMeans,k)
     averages = []
     stdDev = []
-    '''k = 50
-    for k in range(1,50,5):
-        kMeans = km.Kmeans(trainData, testData, k)
-        kMeans.train()
-        probs = probabilities(kMeans)
-        for i in range(len(kMeans.centroids)):#mutliplies probability of class through the (V|C)
-            for key, value in kMeans.centroids[i].classFreq.items():
-                kMeans.centroids[i].classFreq[key] = value*probs[key]
-        kMeans.test()
-        kMeans.results(kMeans.testData, False, True, True)
-        probabilities(kMeans)
-        stats(averages,stdDev,kMeans,k)'''
 main()

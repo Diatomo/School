@@ -114,8 +114,6 @@ class Kmeans(object):
             print("==============================")
             for i in range(len(self.centroids)):
                 cCentroid = self.centroids[i]
-                #for j in range(len(cCentroid.cVector)):
-                 #   rCentroids.append((cCentroid.cVector[j].x, cCentroid.cVector[j].y, cCentroid.cVector[j].c))
                 print("Centroid : " + str(i) + " : Class = " +str(cCentroid.classifier))
                 print("Centroid : " + str(i) + " : P(C|V) = " +str(cCentroid.classFreq))
                 rCetroids = []
