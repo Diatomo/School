@@ -119,8 +119,4 @@ def main():
 	#days to death
 	#days to last follow-up
 			
-		
-		
-
-
 main()
