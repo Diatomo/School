@@ -6,9 +6,9 @@ in unsupervised learning methods that eventually led to k-means nearest neighbor
 
 # Dependencies:
 Make these files are in the same directory as iris.py and income.py:
-	income_tr.csv
-	Iris.csv
-  python-pandas
+income_tr.csv
+Iris.csv
+python-pandas
   
 # To Run:
 	python income.py
